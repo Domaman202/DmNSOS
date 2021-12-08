@@ -104,9 +104,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_general
-
+call isr_general
 pop gs
 pop fs
 pop es
@@ -120,8 +118,7 @@ push ds
 push es
 push fs
 push gs
-	call isr_0
-
+call isr_0
 pop gs
 pop fs
 pop es
@@ -135,9 +132,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_1
-
+call isr_1
 pop gs
 pop fs
 pop es
@@ -151,9 +146,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_2
-
+call isr_2
 pop gs
 pop fs
 pop es
@@ -167,9 +160,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_3
-
+call isr_3
 pop gs
 pop fs
 pop es
@@ -183,9 +174,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_4
-
+call isr_4
 pop gs
 pop fs
 pop es
@@ -199,9 +188,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_5
-
+call isr_5
 pop gs
 pop fs
 pop es
@@ -215,9 +202,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_6
-
+call isr_6
 pop gs
 pop fs
 pop es
@@ -231,9 +216,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_7
-
+call isr_7
 pop gs
 pop fs
 pop es
@@ -247,9 +230,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_8
-
+call isr_8
 pop gs
 pop fs
 pop es
@@ -263,9 +244,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_9
-
+call isr_9
 pop gs
 pop fs
 pop es
@@ -279,9 +258,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_10
-
+call isr_10
 pop gs
 pop fs
 pop es
@@ -295,9 +272,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_11
-
+call isr_11
 pop gs
 pop fs
 pop es
@@ -311,9 +286,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_12
-
+call isr_12
 pop gs
 pop fs
 pop es
@@ -327,9 +300,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_13
-
+call isr_13
 pop gs
 pop fs
 pop es
@@ -343,9 +314,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_14
-
+call isr_14
 pop gs
 pop fs
 pop es
@@ -359,9 +328,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_15
-
+call isr_15
 pop gs
 pop fs
 pop es
@@ -375,9 +342,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_16
-
+call isr_16
 pop gs
 pop fs
 pop es
@@ -391,9 +356,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_17
-
+call isr_17
 pop gs
 pop fs
 pop es
@@ -407,9 +370,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_18
-
+call isr_18
 pop gs
 pop fs
 pop es
@@ -423,9 +384,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_19
-
+call isr_19
 pop gs
 pop fs
 pop es
@@ -439,9 +398,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_20
-
+call isr_20
 pop gs
 pop fs
 pop es
@@ -455,9 +412,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_21
-
+call isr_21
 pop gs
 pop fs
 pop es
@@ -471,9 +426,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_22
-
+call isr_22
 pop gs
 pop fs
 pop es
@@ -487,9 +440,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_23
-
+call isr_23
 pop gs
 pop fs
 pop es
@@ -503,9 +454,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_24
-
+call isr_24
 pop gs
 pop fs
 pop es
@@ -519,9 +468,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_25
-
+call isr_25
 pop gs
 pop fs
 pop es
@@ -535,9 +482,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_26
-
+call isr_26
 pop gs
 pop fs
 pop es
@@ -551,9 +496,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_27
-
+call isr_27
 pop gs
 pop fs
 pop es
@@ -567,9 +510,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_28
-
+call isr_28
 pop gs
 pop fs
 pop es
@@ -583,9 +524,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_29
-
+call isr_29
 pop gs
 pop fs
 pop es
@@ -599,9 +538,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_30
-
+call isr_30
 pop gs
 pop fs
 pop es
@@ -615,9 +552,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_31
-
+call isr_31
 pop gs
 pop fs
 pop es
@@ -631,9 +566,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_32
-
+call isr_32
 pop gs
 pop fs
 pop es
@@ -647,9 +580,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_33
-
+call isr_33
 pop gs
 pop fs
 pop es
@@ -663,9 +594,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_34
-
+call isr_34
 pop gs
 pop fs
 pop es
@@ -679,9 +608,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_35
-
+call isr_35
 pop gs
 pop fs
 pop es
@@ -694,9 +621,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_36
-
+call isr_36
 pop gs
 pop fs
 pop es
@@ -710,9 +635,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_37
-
+call isr_37
 pop gs
 pop fs
 pop es
@@ -726,9 +649,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_38
-
+call isr_38
 pop gs
 pop fs
 pop es
@@ -741,9 +662,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_39
-
+call isr_39
 pop gs
 pop fs
 pop es
@@ -757,9 +676,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_40
-
+call isr_40
 pop gs
 pop fs
 pop es
@@ -773,9 +690,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_41
-
+call isr_41
 pop gs
 pop fs
 pop es
@@ -789,9 +704,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_42
-
+call isr_42
 pop gs
 pop fs
 pop es
@@ -805,9 +718,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_43
-
+call isr_43
 pop gs
 pop fs
 pop es
@@ -821,9 +732,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_44
-
+call isr_44
 pop gs
 pop fs
 pop es
@@ -837,9 +746,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_45
-
+call isr_45
 pop gs
 pop fs
 pop es
@@ -853,9 +760,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_46
-
+call isr_46
 pop gs
 pop fs
 pop es
@@ -869,9 +774,7 @@ push ds
 push es
 push fs
 push gs
-
-	call isr_47
-
+call isr_47
 pop gs
 pop fs
 pop es
