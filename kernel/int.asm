@@ -655,6 +655,7 @@ pop fs
 pop es
 pop ds
 popa
+iret
 
 int_39:
 pusha
@@ -780,6 +781,4 @@ pop fs
 pop es
 pop ds
 popa
-iret
-iret
 iret
