@@ -5,3 +5,4 @@ main:
     jmp kmain
 
 %include "int.asm"
+%include "v86.asm"
