@@ -22,10 +22,7 @@ start:
 ; Detect Low Memory (below 1Mb, usually returns < 640Kb)
     xor ax, ax
     int 0x12
-    jc .mem_error
-    jmp .mem_continue
-
-.mem_error:
+    jnc .mem_continue
     jmp $
 .mem_continue:
     ; ax now contains the # of kB from zero of continuous memory
