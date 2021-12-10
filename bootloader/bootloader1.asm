@@ -77,7 +77,18 @@ start:
 	
 	mov bx, MSG_4
 	call println
-	jmp enter_pm
+
+; Enter Protected Mode and jump to kernel
+	cli
+	lgdt [gdt_descriptor]	; defines protected mode segments
+	mov eax, cr0
+	or eax, 0x1
+	mov cr0, eax
+
+    ; flush the prefetch input queue
+    ; Perform far jump to selector 08h (offset into GDT, pointing at a 32bit PM code segment descriptor) 
+    ; to load CS with proper PM32 descriptor)
+	jmp CODE_SEG:init_pm	; flushes real-mode commands
 
 .disk_error:
 	mov bx, DISK_ERROR
@@ -93,22 +104,6 @@ start:
 	mov bx, MSG_FROMDISK
 	call println
 	call halt
-
-
-
-; Enter Protected Mode and jump to kernel
-
-enter_pm:
-	cli
-	lgdt [gdt_descriptor]	; defines protected mode segments
-	mov eax, cr0
-	or eax, 0x1
-	mov cr0, eax
-
-    ; flush the prefetch input queue
-    ; Perform far jump to selector 08h (offset into GDT, pointing at a 32bit PM code segment descriptor) 
-    ; to load CS with proper PM32 descriptor)
-	jmp CODE_SEG:init_pm	; flushes real-mode commands
 
 [BITS 32]
 init_pm:
