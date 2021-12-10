@@ -1,14 +1,6 @@
-;==================================
-; KevinOS bootloader 2
-; Written March 28, 2014
-;==================================
 ORG 0x7E00
 jmp 0x0000:start
 
-;BIOS_DATA_AREA equ 0x400 
-;KERNEL_ADDRESS equ 0x200
-; Note that if you change the kernel address, you also must change it
-; in compile.sh (-Ttext)
 KERNEL_ADDRESS equ 0x8000
 NUM_SECTORS equ 83
 
@@ -213,10 +205,8 @@ printpm:
 
 [BITS 16]
 
-
 BOOT_DRIVE db 0
 MSG_KB db ' kb RAM', 0
-MSG_2 db 'Press a key to load the kernel', 0
 MSG_READ db 'Read ', 0
 MSG_READING db 'Reading ', 0
 MSG_FROMDISK db ' sectors from disk', 0
