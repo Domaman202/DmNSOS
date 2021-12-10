@@ -342,11 +342,11 @@ void isr_33() {
     //
 //    print_char(scancode);
 	//
-    if (scancode < 129) {
-        char *str = "Key =>  ";
-        str[7] = scancode + 0x30;
+//    if (scancode < 129) {
+        char *str = "   ";
+		itoa(str, scancode);
         println_string(str);
-    }
+//    }
 }
 
 void isr_34(){
