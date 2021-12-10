@@ -11,7 +11,7 @@ void kmain(void) {
     mem_init();
     println_string("Memory initialized!");
     //
-    
+
     //
     while (1);
 }
