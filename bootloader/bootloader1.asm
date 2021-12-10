@@ -36,29 +36,18 @@ start:
 	xor ax, ax
 	mov ds, ax
 	mov es, ax
-
 ; Set up the stack:
 	cli
 	mov bp, 0x7C00
 	mov sp, bp
 	mov ss, ax
 	sti
-
 ; Store the boot drive for later:
 	mov [BOOT_DRIVE], dl
-
 ; Load the kernel
-	mov bx, MSG_READING
-	call print
-	mov bx, NUM_SECTORS
-	call printint
-	mov bx, MSG_FROMDISK
-	call println
-
 	mov bx, KERNEL_ADDRESS
 	mov dh, NUM_SECTORS 
 	mov dl, [BOOT_DRIVE]
-	
 ; load DH sectors to ES:BX from drive DL
 ; Add a looping thing here to load one sector at a time, rather than all at once?
 	push dx
@@ -69,15 +58,11 @@ start:
 	mov dh, 0		; head 0
 	mov cl, 3		; start at sector 2 (1 is boot sector)
 	int 0x13
-	
-	jc .disk_error
+
+	jc halt
 	pop dx
 	cmp dh, al
-	jne .incomplete
-	
-	mov bx, MSG_4
-	call println
-
+	jne halt
 ; Enter Protected Mode and jump to kernel
 	cli
 	lgdt [gdt_descriptor]	; defines protected mode segments
@@ -90,21 +75,6 @@ start:
     ; to load CS with proper PM32 descriptor)
 	jmp CODE_SEG:init_pm	; flushes real-mode commands
 
-.disk_error:
-	mov bx, DISK_ERROR
-	call println
-	call halt
-.incomplete:
-	mov bx, DISK_ERROR
-	call println
-	mov bx, MSG_READ
-	call print
-	mov bl, dh
-	call printint
-	mov bx, MSG_FROMDISK
-	call println
-	call halt
-
 [BITS 32]
 init_pm:
 	mov ax, DATA_SEG
@@ -115,101 +85,16 @@ init_pm:
 	mov gs, ax
 	mov ebp, 0x90000
 	mov esp, ebp
-	mov ebx, MSG_5
-	call printpm
 
 	jmp KERNEL_ADDRESS
 	jmp $
-	
-	
 
-; Functions-------------------------------
-
-; string address in bx
 [BITS 16]
-println:
-	call print
-	mov al, 0x0D		; LF CR
-	int 0x10
-	mov al, 0x0A
-	int 0x10
-	ret
-
-print:
-	mov ah, 0x0e		; int 0x10 teletype output
-.print_repeat:	
-	mov al, [bx]
-	cmp al, 0
-	je .print_done
-	int 0x10
-	inc bx
-	jmp .print_repeat
-.print_done:
-	ret
 
 halt:
-	mov bx, HALTING
-	call println
-	jmp $
-
-; int in bx, must be 000 - 999
-printint:
-	push dx
-	push bx
-	push ax
-	xor dx, dx
-	mov ax, bx
-	mov bx, 100
-	div bx		;divide dx:ax by bx, store in ax, remainder in dx
-	mov [NUM_BUFFER], al
-	add [NUM_BUFFER], byte '0'
-	mov ax, dx
-	xor dx, dx
-	mov bx, 10
-	div bx
-	mov [NUM_BUFFER+1], al
-	add [NUM_BUFFER+1], byte '0'
-	mov [NUM_BUFFER+2], dx
-	add [NUM_BUFFER+2], byte '0'
-	mov bx, NUM_BUFFER
-	call print
-	pop ax
-	pop bx
-	pop dx
-    ret
-
-[BITS 32]
-printpm:
-	VIDEO_MEM equ 0xb8000
-	WHITE_ON_BLACK equ 0x0f
-	pusha
-	mov edx, VIDEO_MEM
-	add edx, 160*20
-.repeat:
-	mov al, [ebx]
-	mov ah, WHITE_ON_BLACK
-	cmp al, 0
-	je .done
-	mov [edx], ax
-	add ebx, 1
-	add edx, 2		; 2 bytes in video memory (1 for ascii, 1 for settings)
-	jmp .repeat
-.done:
-	popa
-	ret
-
-[BITS 16]
+    jmp $
 
 BOOT_DRIVE db 0
-MSG_KB db ' kb RAM', 0
-MSG_READ db 'Read ', 0
-MSG_READING db 'Reading ', 0
-MSG_FROMDISK db ' sectors from disk', 0
-MSG_4 db 'Done!', 0
-MSG_5 db 'PM: Entering kernel', 0
-DISK_ERROR db 'Read failed!', 0
-HALTING db 'Halting', 0
-NUM_BUFFER db '000', 0
 
 times 510-($-$$) db 0
 dw 0xaa55
