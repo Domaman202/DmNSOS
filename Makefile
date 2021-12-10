@@ -7,6 +7,6 @@ build:
 clean:
 	make -C ./kernel clean
 	make -C ./bootloader clean
-	rm ./iso/*
+	rm -d -r ./iso
 	rm *.bin
 	rm disk.img
