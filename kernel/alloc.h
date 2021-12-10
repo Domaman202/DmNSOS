@@ -4,58 +4,63 @@
 #include "stdlib.h"
 
 typedef struct mem_block_header {
-    /*
-     * 0 - free
-     * 1 - allocated
-     */
-    uint8_t flags;
+    size_t size;
+    int free;
     struct mem_block_header *next;
+    struct mem_block_header *prev;
 } mem_block_header;
 
 mem_block_header* mem_start_block;
 
 void mem_init() {
-    mem_start_block = MEM_START;
-    mem_start_block->flags = 0x0;
-    mem_start_block->next = MEM_END;
+    mem_start_block = (mem_block_header*) MEM_SPACE;
+    mem_start_block->free = 1;//if free 1,if allocated 0
+    mem_start_block->size = 25000 - sizeof(mem_block_header);
+    mem_start_block->prev = 0;
+    mem_start_block->next = 0;
 }
 
-mem_block_header* mem_split(size_t size) {
-    mem_block_header* free_block = mem_start_block;
-    while(free_block->flags == 0x1 && (free_block->next - free_block) != size) {
-        if (free_block == MEM_END) {
-            println_string("Tb| wo 9e6u/\\?!");
-            return 0;
-        }
-        free_block = free_block->next;
-    }
-    if ((free_block->next - free_block) == size) {
-        free_block->flags = 0x1;
-        return free_block;
-    }
-    //
-    mem_block_header* allocated_block = free_block;
-    allocated_block->flags = 0x1;
-    //
-    mem_block_header* new_block = free_block + sizeof(mem_block_header) + size;
-    new_block->flags = 0x0;
-    new_block->next = allocated_block->next;
-    //
-    allocated_block->next = new_block;
-    //
-    return allocated_block;
+mem_block_header *newdata(mem_block_header *block, size_t size, size_t freesize) {
+    mem_block_header *newdata = (mem_block_header *)((char *)block + size + sizeof(mem_block_header) + 1);
+    newdata->size = freesize - size - sizeof(mem_block_header) - 1;
+    newdata->free = 1;
+    newdata->next = block->next;
+    newdata->prev = block;
+    return newdata;
 }
 
 void* malloc(size_t size) {
-    return (void*) mem_split(size) + sizeof(mem_block_header);
+    mem_block_header *travel = mem_start_block;
+    while (1) {
+        if (travel == 0)
+            return 0;
+        else if (travel->size >= (size + sizeof(mem_block_header)) && travel->free == 1) {
+            travel->next = newdata(travel, size, travel->size);
+            travel->size = size;
+            travel->free = 0;
+            break;
+        }
+        travel = travel->next;
+    }
+    return (char *) travel + sizeof(mem_block_header) + 1;
 }
 
 void free(void *ptr) {
-    ((mem_block_header*) ptr - sizeof(mem_block_header))->flags = 0x0;
-}
+    mem_block_header *info = (mem_block_header *) ((char *) ptr - 1) - 1;
+    info->free = 1;
+    if (info->next != 0 && info->next->free == 1) {
+        info->size += info->next->size + sizeof(mem_block_header) + 1;
+        if (info->next->next != 0)
+            info->next->next->prev = info;
+        info->next = info->next->next;
+    }
 
-void free_block(mem_block_header *ptr) {
-    ptr->flags = 0x0;
+    if (info->prev != 0 && info->prev->free == 1) {
+        info->prev->size += info->size + sizeof(mem_block_header) + 1;
+        if (info->next != 0)
+            info->next->prev = info->prev;
+        info->prev->next = info->next;
+    }
 }
 
 #endif //ALLOC_H
