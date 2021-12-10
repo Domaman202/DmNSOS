@@ -38,13 +38,6 @@ start:
     mov bx, MSG_KB
     call println
 
-; Wait for keystroke
-.wait:
-    mov bx, MSG_2
-    call println
-    mov ah, 0
-    int 0x16
-
 ; Load the second stage
 ; load AL sectors to ES:BX from drive DL
     mov bx, 0x7C00 + 512
@@ -147,7 +140,6 @@ printint:
 
 BOOT_DRIVE db 0
 
-MSG_2 db 'Press a key to continue', 0
 ERROR1 db 'Error1', 0
 ERROR2 db 'Error2', 0
 HALTING db 'Halting', 0

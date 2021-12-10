@@ -55,12 +55,6 @@ start:
 ; Store the boot drive for later:
 	mov [BOOT_DRIVE], dl
 
-;; Wait for keystroke
-	mov bx, MSG_2
-	call println
-	mov ah, 0
-	int 0x16
-
 ; Load the kernel
 	mov bx, MSG_READING
 	call print

@@ -8,6 +8,4 @@ build:
 	ld -m elf_i386 -o kernel.bin -Ttext 0x8000 ./kasm.o ${O_FILES} --oformat binary --entry main
 	mkdir ../iso
 	mv kernel.bin ../iso
-
-clean:
 	rm *.o

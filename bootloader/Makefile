@@ -3,7 +3,5 @@ build:
 	nasm -f bin bootloader1.asm
 	cat bootloader0 bootloader1 > bootloader.bin
 	mv bootloader.bin ../iso
-
-clean:
 	rm bootloader0
 	rm bootloader1
