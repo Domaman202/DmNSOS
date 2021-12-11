@@ -1,6 +1,6 @@
 #include "kernel.h"
 
-void kmain(void) {
+extern "C" void kmain(void) {
     //
     init_vga();
     println_string("VGA initialized!");
@@ -26,6 +26,16 @@ void kmain(void) {
     free(ptr1);
     free(ptr2);
     free(ptr3);
+    //
+    class test {
+    public:
+        void foo() {
+            println_string("Foo!");
+        }
+    };
+    //
+    test obj;
+    obj.foo();
     //
     while (1);
 }
