@@ -1,6 +1,6 @@
 #include "setjmp.h"
 
-int setjmp(jmp_buf*) {
+int setjmp(jmp_buf* buf) {
     // relies on the compiler to make a stack-frame
     // because we're using inline asm inside a function instead of at global scope
     asm volatile(
@@ -19,7 +19,7 @@ int setjmp(jmp_buf*) {
 
     return 0;
 }
-void longjmp(jmp_buf*, int) {
+void longjmp(jmp_buf* buf, int val) {
     asm volatile(
     "    mov  8(%ebp),%edx # get pointer to jmp_buf, passed as argument 1 on stack\n"
     "    mov  12(%ebp),%eax #get int val in eax, passed as argument 2 on stack\n"
