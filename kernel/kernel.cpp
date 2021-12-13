@@ -50,7 +50,10 @@ extern "C" void kmain(void) {
         print_string("Jmp value => ");
         println_string(itoa(line, jmp_value));
     }
-    println_string("Post jump code N1!");
+    println_string("Post jump code N1!"); // Two calls.
+    if (jmp_value == 12)
+        longjmp(&jmp_buf, 202);
+    print_string("Post jump code N2!");
     //
     while (1);
 }
