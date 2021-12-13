@@ -1,7 +1,7 @@
 #ifndef ALLOC_H
 #define ALLOC_H
 
-#include "stddef.h"
+#include "stdint.h"
 
 #define MEM_START ((void *) 0x2000000)
 #define MEM_SPACE 536870912

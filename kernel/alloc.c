@@ -22,7 +22,7 @@ mem_block* split_heap(size_t size) {
 
     last_block->flags = 0x1;
 
-    mem_block* new_next_block = (mem_block*)((long) last_block + (long) size + (long) sizeof(mem_block));
+    mem_block* new_next_block = (mem_block*)((uintptr_t) last_block + size + sizeof(mem_block));
     new_next_block->next = last_block->next;
     last_block->next = new_next_block;
 
@@ -34,5 +34,5 @@ void* malloc(size_t size) {
 }
 
 void free(void* ptr) {
-    ((mem_block*) ((long) ptr - (long) sizeof(mem_block)))->flags = 0x0;
+    ((mem_block*) ((uintptr_t) ptr - sizeof(mem_block)))->flags = 0x0;
 }

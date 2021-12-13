@@ -30,3 +30,11 @@ char *itoa(char *dest, int i) {
     *itoa_simple_helper(s, i) = '\0';
     return dest;
 }
+
+int32_t abs(int32_t n) {
+    return n < 0 ? n * -1 : n;
+}
+
+int64_t labs(int64_t n) {
+    return n < 0 ? n * -1 : n;
+}
