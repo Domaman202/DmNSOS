@@ -10,9 +10,6 @@
 
 typedef struct { int quot; int rem; } div_t;
 typedef struct { long quot; long rem; } ldiv_t;
-
-void* memcpy(void* dst, const void* src, size_t count);
-void* memset(void* dst, char value, size_t count);
 static char *itoa_simple_helper(char *dest, int i);
 char *itoa(char *dest, int i);
 int atoi(char*);
