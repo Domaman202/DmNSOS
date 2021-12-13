@@ -2,6 +2,7 @@
 #define KERNEL_H
 
 extern "C" {
+#include "setjmp.h"
 #include "screen.h"
 #include "alloc.h"
 #include "IDT.h"
