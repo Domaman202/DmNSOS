@@ -6,8 +6,8 @@ void mem_init(void) {
     block->next = MEM_END;
 }
 
-size_t mb_size(mem_block* mem_block) {
-    return mem_block->next - mem_block;
+size_t mb_size(mem_block* block) {
+    return block->next - block;
 }
 
 mem_block* split_heap(size_t size) {
