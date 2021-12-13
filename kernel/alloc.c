@@ -1,5 +1,4 @@
 #include "alloc.h"
-#include "screen.h"
 
 void mem_init(void) {
     mem_block* block = (mem_block*) MEM_START;
@@ -8,7 +7,7 @@ void mem_init(void) {
 }
 
 size_t mb_size(mem_block* block) {
-    return (long) block - (long) block->next;
+    return (uintptr_t) block->next - (uintptr_t) block;
 }
 
 mem_block* split_heap(size_t size) {
@@ -90,7 +89,7 @@ void* calloc(size_t num, size_t size) {
 }
 
 void* malloc(size_t size) {
-    return split_heap(size) + sizeof(mem_block);
+    return ((uintptr_t) split_heap(size)) + sizeof(mem_block);
 }
 
 void free(void* ptr) {

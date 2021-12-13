@@ -53,7 +53,19 @@ extern "C" void kmain(void) {
     println_string("Post jump code N1!"); // Two calls.
     if (jmp_value == 12)
         longjmp(&jmp_buf, 202);
-    print_string("Post jump code N2!");
+    println_string("Post jump code N2!");
+    //
+    mem_block* block = split_heap(8);
+    println_string(itoa(line, block));
+    println_string(itoa(line, block->next));
+    println_string(itoa(line, mb_size(block)));
+    void* block_ = (void*) ((uintptr_t) block + sizeof(mem_block));
+    println_string(itoa(line, ((uintptr_t) block_) - sizeof(mem_block)));
+    block->flags = 0x0;
+    //
+    void* ptr4 = malloc(256);
+    println_string(itoa(line, mb_size((uintptr_t) ptr4 - sizeof(mem_block))));
+    free(ptr4);
     //
     while (1);
 }
