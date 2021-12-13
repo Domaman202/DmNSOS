@@ -29,6 +29,13 @@ mem_block* split_heap(size_t size) {
     return last_block;
 }
 
+void* calloc(size_t num, size_t size) {
+    uint64_t i = num * size;
+    uint8_t* mem = malloc(i);
+    for (i--; i != -1; i--)
+        mem[i] = 0;
+}
+
 void* malloc(size_t size) {
     return split_heap(size) + sizeof(mem_block);
 }

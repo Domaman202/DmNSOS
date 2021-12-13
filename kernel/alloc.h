@@ -15,6 +15,7 @@ typedef struct mem_block {
 void mem_init(void);
 size_t mb_size(mem_block*);
 mem_block* split_heap(size_t);
+void* calloc(size_t num, size_t size);
 void* malloc(size_t);
 void free(void*);
 
