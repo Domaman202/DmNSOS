@@ -15,6 +15,7 @@ void* memcpy(void* dst, const void* src, size_t count);
 void* memset(void* dst, char value, size_t count);
 static char *itoa_simple_helper(char *dest, int i);
 char *itoa(char *dest, int i);
+int atoi(char*);
 int32_t abs(int32_t);
 int64_t labs(int64_t);
 //div_t div(int num, int denom); TODO:

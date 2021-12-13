@@ -31,6 +31,16 @@ char *itoa(char *dest, int i) {
     return dest;
 }
 
+int atoi(char* s) {
+    int n = 0;
+    while (*s >= '0' && *s <= '9') {
+        n *= 10;
+        n += *s++;
+        n -= '0';
+    }
+    return n;
+}
+
 int32_t abs(int32_t n) {
     return n < 0 ? n * -1 : n;
 }
