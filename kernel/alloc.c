@@ -36,7 +36,7 @@ void* realloc(void* mem, size_t size) {
     if (bsize - sizeof(mem_block) == size)
         return mem;
     if (bsize > size) {
-        size_t free_space = bsize - size;
+        size_t free_space = bsize - size - sizeof(mem_block);
         if (free_space > sizeof(mem_block)) {
             mem_block *old_next = block->next;
             mem_block *free_block = (uintptr_t) (block->next) - free_space;
@@ -47,35 +47,35 @@ void* realloc(void* mem, size_t size) {
         } else return mem;
     }
     //
-//    size_t i = 0; // TODO: rework
-//    size_t j = 0;
-//    mem_block *last_block = block->next;
-//    while (last_block->flags == 0x0) {
-//        i++;
-//        j += mb_size(last_block);
-//        last_block = last_block->next;
-//    }
-//    if (j == size - bsize) {
-//        block->next = last_block;
-//        return mem;
-//    } else if (j > size - bsize) {
-//        if (sizeof(mem_block) < size - bsize) {
-//            block->next = last_block;
-//            return mem;
-//        }
-//        mem_block *old_next = last_block;
-//        last_block = last_block - mb_size(last_block); // getting prev block
-//        mem_block *free_block = old_next - (j - size - bsize);
-//        free_block->flags = 0x0;
-//        free_block->next = old_next;
-//        last_block->next = free_block;
-//        return mem;
-//    }
-    //
-    void* new_mem = malloc(size);
-    memcpy(new_mem, mem, size);
-    block->flags = 0x0;
-    return new_mem;
+    size_t i = 0;
+    size_t j = 0;
+    mem_block *last_block = block->next;
+    while (last_block->flags == 0x0) {
+        i++;
+        j += mb_size(last_block);
+        if (j == size - bsize) {
+            block->next = last_block->next;
+            return mem;
+        }
+        if (j > size - bsize) {
+            size_t lbsize = mb_size(last_block);
+            if (lbsize - (size - bsize) <= sizeof(mem_block)) {
+                block->next = last_block->next;
+                return mem;
+            }
+            mem_block* new_next = (uintptr_t) last_block + (size - bsize) + sizeof(mem_block);
+            new_next->flags = 0x0;
+            new_next->next = last_block->next;
+            block->next = new_next;
+            return mem;
+        }
+    }
+    if (i == 0) {
+        void *new_mem = malloc(size);
+        memcpy(new_mem, mem, size);
+        block->flags = 0x0;
+        return new_mem;
+    }
 }
 
 void* calloc(size_t num, size_t size) {
