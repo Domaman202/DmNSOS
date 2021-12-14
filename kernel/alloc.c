@@ -1,4 +1,5 @@
 #include "alloc.h"
+#include "screen.h"
 
 void mem_init(void) {
     mem_block* block = (mem_block*) MEM_START;
@@ -29,28 +30,24 @@ mem_block* split_heap(size_t size) {
     return last_block;
 }
 
-//void* realloc(void* mem, size_t size) { TODO: fix
-//    mem_block *block = ((uintptr_t) mem - sizeof(mem_block));
-//    size_t bsize = mb_size(block);
-//    char line[80];
-//    println();
-//    println_string(itoa(line, bsize));
-//    println();
-//    if (bsize == size)
-//        return mem;
-//    if (bsize < size) {
-//        size_t free_space = bsize - size;
-//        if (free_space > sizeof(mem_block)) {
-//            mem_block *old_next = block->next;
-//            mem_block *free_block = (uintptr_t) block + bsize - free_space;
-//            free_block->flags = 0x0;
-//            free_block->next = old_next;
-//            block->next = free_block;
-//            return mem;
-//        } else return mem;
-//    }
-//    //
-//    size_t i = 0;
+void* realloc(void* mem, size_t size) {
+    mem_block *block = ((uintptr_t) mem - sizeof(mem_block));
+    size_t bsize = mb_size(block);
+    if (bsize - sizeof(mem_block) == size)
+        return mem;
+    if (bsize > size) {
+        size_t free_space = bsize - size;
+        if (free_space > sizeof(mem_block)) {
+            mem_block *old_next = block->next;
+            mem_block *free_block = (uintptr_t) (block->next) - free_space;
+            free_block->flags = 0x0;
+            free_block->next = old_next;
+            block->next = free_block;
+            return mem;
+        } else return mem;
+    }
+    //
+//    size_t i = 0; // TODO: rework
 //    size_t j = 0;
 //    mem_block *last_block = block->next;
 //    while (last_block->flags == 0x0) {
@@ -74,12 +71,12 @@ mem_block* split_heap(size_t size) {
 //        last_block->next = free_block;
 //        return mem;
 //    }
-//    //
-//    void* new_mem = malloc(size);
-//    memcpy(new_mem, mem, size);
-//    block->flags = 0x0;
-//    return new_mem;
-//}
+    //
+    void* new_mem = malloc(size);
+    memcpy(new_mem, mem, size);
+    block->flags = 0x0;
+    return new_mem;
+}
 
 void* calloc(size_t num, size_t size) {
     uint64_t i = num * size;
