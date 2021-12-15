@@ -1,6 +1,6 @@
-#include "string.h"
-#include "ahci.h"
-#include "ata.h"
+#include "include/string.h"
+#include "include/ahci.h"
+#include "include/ata.h"
 
 int identify_device(HBA_PORT *port, IDENTIFY_DEVICE_DATA *id) {
     memset(id, 0, sizeof(IDENTIFY_DEVICE_DATA));

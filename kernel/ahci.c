@@ -1,6 +1,6 @@
 #include "stdbool.h"
-#include "ahci.h"
-#include "ata.h"
+#include "include/ahci.h"
+#include "include/ata.h"
 
 int ata_command(HBA_PORT *port, uint8_t *regs, uint8_t *buf, uint32_t buf_len, uint8_t direction) {
     port->is = (uint32_t)-1;

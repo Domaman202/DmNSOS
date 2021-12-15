@@ -1,4 +1,4 @@
-#include "IDT.h"
+#include "include/IDT.h"
 
 void idt_init() {
     unsigned int i;

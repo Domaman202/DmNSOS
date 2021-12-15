@@ -1,4 +1,4 @@
-#include "screen.h"
+#include "include/screen.h"
 
 uint16_t* vga_buffer = (uint16_t*) VGA_ADDRESS;
 uint8_t vga_w = 80;
