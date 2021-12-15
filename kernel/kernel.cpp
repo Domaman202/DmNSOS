@@ -2,7 +2,7 @@
 
 namespace DmNSOS {
     void fs_init(void) {
-
+        
     }
 
     extern "C" void kmain(void) {
