@@ -63,7 +63,6 @@ void idt_init() {
     idt.offset = (unsigned int)&idttable;		// Pointer to the IDT
 
     asm("lidt (%0)" : : "p"(&idt));			// Load the IDT struct
-    asm("sti" : :);					// Activate interrupts
 }
 
 void idt_entry(unsigned int entry, void* offset, unsigned short selector, unsigned char flag)

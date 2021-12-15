@@ -30,3 +30,7 @@ void play_sound(uint32_t nFrequency) {
     if (tmp != (tmp | 3))
         write_port(0x61, tmp | 3);
 }
+
+void msleep(uint32_t millis) {
+    asm("nop");
+}

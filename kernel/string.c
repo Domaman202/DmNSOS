@@ -11,3 +11,13 @@ void* memset(void* dst, char value, size_t count) {
         ((char*) dst)[count] = value;
     return dst;
 }
+
+void byte_swap(uint8_t *data, int len) {
+    int i;
+    uint8_t temp;
+    for(i = 0; i < len; i += 2) {
+        temp = data[i];
+        data[i] = data[i+1];
+        data[i+1] = temp;
+    }
+}

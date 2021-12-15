@@ -1,6 +1,10 @@
 #include "kernel.h"
 
 namespace DmNSOS {
+    void fs_init(void) {
+
+    }
+
     extern "C" void kmain(void) {
         //
         init_vga();
@@ -15,6 +19,7 @@ namespace DmNSOS {
 //        fs_init();
         println_string("TODO: FileSystem!");
         //
+        asm("sti");
         while (1);
     }
 }

@@ -15,4 +15,6 @@ void play_sound(uint32_t nFrequency);
 #define inportw(port, out_value) asm("inw %w1, %w0":"=a"(value):"d"(port));
 #define inportl(port, out_value) asm("inl %w1, %0":"=a"(value):"d"(port));
 
+void msleep(uint32_t millis); // TODO:
+
 #endif //IO_H
