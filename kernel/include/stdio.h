@@ -22,13 +22,13 @@
 typedef struct FILE FILE;
 #else
 namespace DmNSOS {
-    class file {
+    class stream {
     public:
         virtual int getc() = 0;
         virtual int putc(int c) = 0;
     };
 
-    class buf_file : public file {
+    class buf_stream : public stream {
     public:
         char* buf;
         int32_t size;
@@ -49,7 +49,7 @@ namespace DmNSOS {
 }
 
 struct FILE {
-    DmNSOS::file* file;
+    DmNSOS::stream* stream;
 };
 #endif //__cplusplus
 
