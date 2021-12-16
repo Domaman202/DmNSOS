@@ -26,33 +26,35 @@ extern "C" {
 #include "alloc.h"
 }
 
-class _FILE {
-public:
-    virtual int getc() = 0;
-    virtual int putc(int c) = 0;
-};
+namespace DmNSOS {
+    class file {
+    public:
+        virtual int getc() = 0;
+        virtual int putc(int c) = 0;
+    };
 
-class __FILE : public _FILE {
-public:
-    char* buf;
-    int32_t size;
-    int32_t offset;
+    class buf_file : public file {
+    public:
+        char* buf;
+        int32_t size;
+        int32_t offset;
 
-    virtual int getc() override {
-        if (offset == size)
-            return EOF;
-        return buf[offset++];
-    }
+        virtual int getc() override {
+            if (offset == size)
+                return EOF;
+            return buf[offset++];
+        }
 
-    virtual int putc(int c) override {
-        if (offset == size)
-            return buf[size] = EOF;
-        return buf[offset++] = c;
-    }
-};
+        virtual int putc(int c) override {
+            if (offset == size)
+                return buf[size] = EOF;
+            return buf[offset++] = c;
+        }
+    };
+}
 
 struct FILE {
-    _FILE* file;
+    DmNSOS::file* file;
 };
 
 #endif //__cplusplus

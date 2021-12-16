@@ -9,7 +9,7 @@ int fputc(int c, FILE *stream) {
 }
 
 void setbuf(FILE *stream, char *buf) {
-    __FILE* file = new __FILE;
+    DmNSOS::buf_file* file = new DmNSOS::buf_file;
     stream->file = file;
     file->buf = buf;
     file->size = BUFSIZ;
