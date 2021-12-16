@@ -13,6 +13,7 @@ extern uint16_t vga_x, vga_y;
 uint16_t vga_entry(unsigned char ch);
 void clear_vga_buffer(void);
 void init_vga(void);
+void checkln(void);
 void println(void);
 void print_char(char ch);
 void print_string(char *str);
