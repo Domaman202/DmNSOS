@@ -1,5 +1,7 @@
 #include "include/stdio.h"
 
+FILE *stdout = nullptr;
+
 int fgetc(FILE *stream) {
     return stream->stream->getc();
 }

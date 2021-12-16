@@ -1,8 +1,17 @@
 #ifndef __STDIO_H_
 #define __STDIO_H_
 
+/// INCLUDE
+
 #include "stdint.h"
 #include "stddef.h"
+
+EXTERN_C_START
+#include "screen.h"
+#include "alloc.h"
+EXTERN_C_END
+
+/// CONSTANTS
 
 #define EOF -1
 
@@ -17,6 +26,8 @@
 
 #undef NULL
 #define NULL (void*) nullptr
+
+/// CLASSES AND STRUCTURES
 
 #ifndef __cplusplus
 typedef struct FILE FILE;
@@ -46,6 +57,18 @@ namespace DmNSOS {
             return buf[offset++] = c;
         }
     };
+
+    class vga_stream : public stream {
+    public:
+        virtual int getc() override {
+            return EOF; // TODO: implement
+        }
+
+        virtual int putc(int c) override {
+            vga_putchar((char) c);
+            return c;
+        }
+    };
 }
 
 struct FILE {
@@ -53,9 +76,13 @@ struct FILE {
 };
 #endif //__cplusplus
 
-EXTERN_C_START
-#include "alloc.h"
+/// VARIABLES
 
+extern FILE* stdout;
+
+/// FUNCTIONS
+
+EXTERN_C_START
 int fgetc(FILE *stream);
 int fputc(int c, FILE *stream);
 void setbuf(FILE *stream, char *buf);

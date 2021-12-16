@@ -1,9 +1,9 @@
 #include "include/test.h"
 
 void test(void) {
-    FILE* file;
+    FILE* file = stdout;
     char* str = malloc(80);
-    setbuf(file, str);
+//    setbuf(file, str);
     fputc('H', file);
     fputc('e', file);
     fputc('l', file);

@@ -7,14 +7,12 @@ extern "C" void __cxa_pure_virtual() {
 namespace DmNSOS {
     extern "C" void kmain(void) {
         //
+        mem_init();
         init_vga();
-        println_string("VGA initialized!");
+        println_string("Memory & VGA initialized!");
         //
         idt_init();
         println_string("IDT initialized!");
-        //
-        mem_init();
-        println_string("Memory initialized!");
         //
         println_string("TODO: FileSystem!"); // TODO:
         //

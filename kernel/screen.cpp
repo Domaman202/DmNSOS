@@ -1,9 +1,10 @@
 #include "include/screen.h"
+#include "include/stdio.h"
 
 uint16_t* vga_buffer = (uint16_t*) VGA_ADDRESS;
 uint8_t vga_w = 80;
 uint8_t vga_h = 25;
-uint16_t vga_x, vga_y;
+uint8_t vga_x, vga_y;
 
 uint16_t vga_entry(unsigned char ch) {
     uint16_t ax;
@@ -28,12 +29,14 @@ void clear_vga_buffer(void) {
 }
 
 void init_vga(void) {
+    stdout = new FILE;
+    stdout->stream = new DmNSOS::vga_stream;
     clear_vga_buffer();
 }
 
 void checkln(void) {
     if (vga_x > vga_w)
-        println();
+        vga_nln();
     if (vga_y == vga_h) {
         vga_x = 0;
         vga_y = vga_h - 1;
@@ -45,13 +48,13 @@ void checkln(void) {
     }
 }
 
-void println(void) {
+void vga_nln(void) {
     vga_x = 0;
     vga_y++;
     checkln();
 }
 
-void print_char(char ch) {
+void vga_putchar(char ch) {
     checkln();
     vga_buffer[vga_x + (vga_y * vga_w)] = vga_entry(ch);
     vga_x++;
@@ -60,16 +63,12 @@ void print_char(char ch) {
 void print_string(char *str) {
     uint32_t index = 0;
     while (str[index]) {
-        print_char(str[index]);
+        fputc(str[index], stdout);
         index++;
     }
 }
 
 void println_string(char *str) {
-    uint32_t index = 0;
-    while (str[index]) {
-        print_char(str[index]);
-        index++;
-    }
-    println();
+    print_string(str);
+    vga_nln();
 }
