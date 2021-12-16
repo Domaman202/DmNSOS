@@ -33,7 +33,7 @@ void init_vga(void) {
 
 void println(void) {
     if (next_line_index >= vga_h) {
-        for (uint32_t i = 2; i < vga_index; i++)
+        for (uint32_t i = vga_w; i < vga_index; i++)
             vga_buffer[i - vga_w] = vga_buffer[i];
         vga_index = next_line_index * vga_w;
     } else {
