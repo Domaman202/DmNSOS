@@ -1,3 +1,4 @@
+#include "include/string.h"
 #include "include/alloc.h"
 
 void mem_init(void) {

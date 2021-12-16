@@ -1,7 +1,7 @@
 #ifndef __SCREEN_H_
 #define __SCREEN_H_
 
-#include "stdlib.h"
+#include "stdint.h"
 #include "stddef.h"
 
 #define VGA_SIZE vga_w * vga_h

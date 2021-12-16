@@ -7,6 +7,8 @@
 #define NULL 0
 #define nullptr 0
 
+#define VGA_ADDRESS 0xb8000
+
 #ifndef __cplusplus
 #define EXTERN_C
 #define EXTERN_C_START
