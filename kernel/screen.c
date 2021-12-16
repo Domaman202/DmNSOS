@@ -48,6 +48,7 @@ void checkln(void) {
 void println(void) {
     vga_x = 0;
     vga_y++;
+    checkln();
 }
 
 void print_char(char ch) {
