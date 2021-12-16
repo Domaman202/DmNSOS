@@ -1,6 +1,7 @@
 #ifndef __ALLOC_H_
 #define __ALLOC_H_
 
+#include "stddef.h"
 #include "stdint.h"
 #include "string.h"
 
@@ -20,5 +21,8 @@ void* realloc(void* mem, size_t size);
 void* calloc(size_t num, size_t size);
 void* malloc(size_t);
 void free(void*);
+
+void* new_(size_t size);
+void delete_(void* ptr);
 
 #endif //__ALLOC_H_

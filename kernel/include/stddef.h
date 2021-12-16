@@ -7,4 +7,16 @@
 #define NULL 0
 #define nullptr 0
 
+#ifndef __cplusplus
+#define EXTERN_C
+#define EXTERN_C_START
+#define EXTERN_C_END
+#else
+#define EXTERN_C extern "C"
+#define EXTERN_C_START EXTERN_C {
+#define EXTERN_C_END }
+#endif //__cplusplus
+
+#define __cdecl __attribute__((__cdecl__))
+
 #endif //__STDDEF_H_

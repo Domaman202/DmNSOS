@@ -7,10 +7,14 @@ extern "C" {
 #include "setjmp.h"
 #include "string.h"
 #include "screen.h"
+#include "stdio.h"
 #include "alloc.h"
 #include "ahci.h"
+#include "test.h"
 #include "IDT.h"
 #include "io.h"
 }
+
+#include "new.h"
 
 #endif //__KERNEL_H_
