@@ -28,7 +28,7 @@ void clear_vga_buffer(void) {
 }
 
 void init_vga(void) {
-    clear_vga_buffer(&vga_buffer);
+    clear_vga_buffer();
 }
 
 void println(void) {
