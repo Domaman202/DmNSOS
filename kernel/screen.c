@@ -20,9 +20,9 @@ uint16_t vga_entry(unsigned char ch) {
     return ax;
 }
 
-void clear_vga_buffer(uint16_t **buffer) {
+void clear_vga_buffer(void) {
     for (uint32_t i = 0; i < VGA_SIZE; i++)
-        (*buffer)[i] = vga_entry(0);
+        vga_buffer[i] = vga_entry(0);
     next_line_index = 1;
     vga_index = 0;
 }
@@ -31,7 +31,7 @@ void init_vga(void) {
     clear_vga_buffer(&vga_buffer);
 }
 
-void println() {
+void println(void) {
     if (next_line_index >= vga_h) {
         for (uint32_t i = 2; i < vga_index; i++)
             vga_buffer[i - vga_w] = vga_buffer[i];
