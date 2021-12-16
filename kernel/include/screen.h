@@ -8,7 +8,7 @@
 extern uint16_t* vga_buffer;
 extern uint8_t vga_w;
 extern uint8_t vga_h;
-extern uint32_t vga_index, next_line_index;
+extern uint16_t vga_x, vga_y;
 
 uint16_t vga_entry(unsigned char ch);
 void clear_vga_buffer(void);
