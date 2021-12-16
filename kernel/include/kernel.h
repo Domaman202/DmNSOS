@@ -6,8 +6,6 @@ extern "C" {
 #include "stddef.h"
 #include "setjmp.h"
 #include "string.h"
-#include "screen.h"
-#include "stdio.h"
 #include "alloc.h"
 #include "ahci.h"
 #include "test.h"
@@ -15,6 +13,8 @@ extern "C" {
 #include "io.h"
 }
 
+#include "screen.h"
+#include "stdio.h"
 #include "new.h"
 
 #endif //__KERNEL_H_
