@@ -19,13 +19,8 @@
 #define NULL (void*) nullptr
 
 #ifndef __cplusplus
-#include "alloc.h"
 typedef struct FILE FILE;
 #else
-extern "C" {
-#include "alloc.h"
-}
-
 namespace DmNSOS {
     class file {
     public:
@@ -56,11 +51,14 @@ namespace DmNSOS {
 struct FILE {
     DmNSOS::file* file;
 };
-
 #endif //__cplusplus
 
-EXTERN_C int fgetc(FILE *stream);
-EXTERN_C int fputc(int c, FILE *stream);
-EXTERN_C void setbuf(FILE *stream, char *buf);
+EXTERN_C_START
+#include "alloc.h"
+
+int fgetc(FILE *stream);
+int fputc(int c, FILE *stream);
+void setbuf(FILE *stream, char *buf);
+EXTERN_C_END
 
 #endif //__STDIO_H_
