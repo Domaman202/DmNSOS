@@ -1,5 +1,5 @@
-#ifndef STDLIB_H
-#define STDLIB_H
+#ifndef __STDLIB_H_
+#define __STDLIB_H_
 
 #include "stdint.h"
 
@@ -18,4 +18,4 @@ int64_t labs(int64_t);
 //div_t div(int num, int denom); TODO:
 //ldiv_t ldiv(long int num, long int denom); TODO:
 
-#endif //STDLIB_H
+#endif //__STDLIB_H_

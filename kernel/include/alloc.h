@@ -1,5 +1,5 @@
-#ifndef ALLOC_H
-#define ALLOC_H
+#ifndef __ALLOC_H_
+#define __ALLOC_H_
 
 #include "stdint.h"
 #include "string.h"
@@ -21,4 +21,4 @@ void* calloc(size_t num, size_t size);
 void* malloc(size_t);
 void free(void*);
 
-#endif //ALLOC_H
+#endif //__ALLOC_H_

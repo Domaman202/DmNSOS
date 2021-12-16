@@ -1,5 +1,5 @@
-#ifndef IO_H
-#define IO_H
+#ifndef __IO_H_
+#define __IO_H_
 
 #include "stdlib.h"
 
@@ -17,4 +17,4 @@ void play_sound(uint32_t nFrequency);
 
 void msleep(uint32_t millis); // TODO:
 
-#endif //IO_H
+#endif //__IO_H_

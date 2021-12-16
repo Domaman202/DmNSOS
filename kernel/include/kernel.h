@@ -1,5 +1,5 @@
-#ifndef KERNEL_H
-#define KERNEL_H
+#ifndef __KERNEL_H_
+#define __KERNEL_H_
 
 extern "C" {
 #include "setjmp.h"
@@ -10,4 +10,4 @@ extern "C" {
 #include "io.h"
 }
 
-#endif //KERNEL_H
+#endif //__KERNEL_H_

@@ -1,3 +1,6 @@
+#ifndef __IDT_H_
+#define __IDT_H_
+
 #include "screen.h"
 #include "io.h"
 
@@ -120,3 +123,5 @@ void isr_47();
 void idt_entry(unsigned int entry, void* offset, unsigned short selector, unsigned char flag);
 
 void idt_init();
+
+#endif //__IDT_H_

@@ -1,5 +1,5 @@
-#ifndef SCREEN_H
-#define SCREEN_H
+#ifndef __SCREEN_H_
+#define __SCREEN_H_
 
 #include "stdlib.h"
 
@@ -18,4 +18,4 @@ void print_char(char ch);
 void print_string(char *str);
 void println_string(char *str);
 
-#endif //SCREEN_H
+#endif //__SCREEN_H_

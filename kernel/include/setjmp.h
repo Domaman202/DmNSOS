@@ -1,5 +1,5 @@
-#ifndef SETJMP_H
-#define SETJMP_H
+#ifndef __SETJMP_H_
+#define __SETJMP_H_
 
 #include "stdint.h"
 
@@ -18,4 +18,4 @@ int setjmp(jmp_buf*);
 __attribute__((noinline, noclone, optimize(0)))
 void longjmp(jmp_buf*, int);
 
-#endif //SETJMP_H
+#endif //__SETJMP_H_
