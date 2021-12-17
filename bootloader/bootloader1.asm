@@ -36,12 +36,6 @@ start:
 	xor ax, ax
 	mov ds, ax
 	mov es, ax
-; Set up the stack:
-	cli
-	mov bp, 0x7C00
-	mov sp, bp
-	mov ss, ax
-	sti
 ; Store the boot drive for later:
 	mov [BOOT_DRIVE], dl
 ; Load the kernel
@@ -58,11 +52,9 @@ start:
 	mov dh, 0		; head 0
 	mov cl, 3		; start at sector 2 (1 is boot sector)
 	int 0x13
-
-	jc halt
+	
 	pop dx
 	cmp dh, al
-	jne halt
 ; Enter Protected Mode and jump to kernel
 	cli
 	lgdt [gdt_descriptor]	; defines protected mode segments
@@ -90,9 +82,6 @@ init_pm:
 	jmp $
 
 [BITS 16]
-
-halt:
-    jmp $
 
 BOOT_DRIVE db 0
 
