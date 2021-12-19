@@ -73,20 +73,17 @@ char getchar() {
         uint8_t charKey = read_port(0x60);
         char key = getchar_keyboard(charKey).key;
         if(key!=' ') {
+            write_port(0x60, 0);
             return key;
         }
     }
-
-    char out = __currentChar;
-    __currentChar = -1;
-    return out;
 }
 
 char* readline() {
     char* output = "";
     while (1) {
         char char_ = getchar();
-        print_string(appendCharToCharArray("", char_));
+        print_char(char_);
         if(char_=='\n') break;
 
         output = appendCharToCharArray(output, char_);
@@ -95,8 +92,7 @@ char* readline() {
     return output;
 }
 
-void idt_entry(unsigned int entry, void* offset, unsigned short selector, unsigned char flag)
-{
+void idt_entry(unsigned int entry, void* offset, unsigned short selector, unsigned char flag) {
     unsigned int offsetinteger = (unsigned int)offset;
     idttable[entry].offset1 = offsetinteger & 0xFFFF;
     idttable[entry].selector = selector;
