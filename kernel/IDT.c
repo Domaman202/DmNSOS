@@ -88,7 +88,8 @@ char* readline() {
         }
 
         print_char(char_);
-        output = appendCharToCharArray(output, char_);
+        if(char_!='\b')
+            output = appendCharToCharArray(output, char_);
     }
 
     println();

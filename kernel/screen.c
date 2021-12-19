@@ -57,6 +57,10 @@ void print_char(char ch) {
     if(ch=='\n') {
         println();
         return;
+    }else if(ch=='\b') {
+        vga_index--;
+        vga_buffer[vga_index] = vga_entry(' ');
+        return;
     }
 
     vga_buffer[vga_index] = vga_entry(ch);
