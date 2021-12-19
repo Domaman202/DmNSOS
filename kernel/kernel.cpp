@@ -24,9 +24,9 @@ extern "C" void kmain() {
         print_string("> ");
         char *line = readline();
 
-        if (strcmp(line, "exit")) {
-            break;
-        } else if (strcmp(line, "hello")) {
+        if (strcmp(line, "exit") == 0) {
+            return;
+        } else if (strcmp(line, "hello") == 0) {
             println_string("Hello!");
         } else {
             print_string(line);

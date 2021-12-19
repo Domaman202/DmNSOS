@@ -91,6 +91,7 @@ char* readline() {
         output = appendCharToCharArray(output, char_);
     }
 
+    println();
     return output;
 }
 
