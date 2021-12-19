@@ -13,7 +13,6 @@ void init() {
 extern "C" void kmain() {
     init();
 
-    asm("cli");
     println_string("    __ _                   ___  __     ");
     println_string("   / /(_)_ __ ___   __ _  /___\\/ _\\  ");
     println_string("  / / | | '_ ` _ \\ / _` |//  //\\ \\  ");
@@ -22,12 +21,16 @@ extern "C" void kmain() {
     println_string("");
     println_string(" Version 0.1 - Alpha. Based on DmNSOS");
     while (1) {
-        print_string(">");
+        print_string("> ");
         char *line = readline();
-        if (strcmp(line,"exit")) {
+
+        if (strcmp(line, "exit")) {
             break;
-        } else if (strcmp(line,"hello")) {
+        } else if (strcmp(line, "hello")) {
             println_string("Hello!");
+        } else {
+            print_string(line);
+            println_string(": not found");
         }
     }
 }

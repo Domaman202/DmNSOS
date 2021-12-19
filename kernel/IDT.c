@@ -83,9 +83,11 @@ char* readline() {
     char* output = "";
     while (1) {
         char char_ = getchar();
-        print_char(char_);
-        if(char_=='\n') break;
+        if(char_=='\n') {
+            break;
+        }
 
+        print_char(char_);
         output = appendCharToCharArray(output, char_);
     }
 
