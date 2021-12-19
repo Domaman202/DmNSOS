@@ -1,5 +1,5 @@
-#ifndef __ATA_STRUCTS_H_
-#define __ATA_STRUCTS_H_
+#ifndef ATA_STRUCTS_H
+#define ATA_STRUCTS_H
 
 #include "stdint.h"
 
@@ -33,4 +33,4 @@ typedef struct tagSMART_DATA {
     uint16_t self_test_ext_poll;
 } SMART_DATA;
 
-#endif //__ATA_STRUCTS_H_
+#endif //ATA_STRUCTS_H
