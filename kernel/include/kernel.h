@@ -1,13 +1,19 @@
-#ifndef KERNEL_H
-#define KERNEL_H
+#ifndef __KERNEL_H_
+#define __KERNEL_H_
 
 extern "C" {
-    #include "setjmp.h"
-    #include "screen.h"
-    #include "alloc.h"
-    #include "ahci.h"
-    #include "IDT.h"
-    #include "io.h"
+#include "stdlib.h"
+#include "stddef.h"
+#include "setjmp.h"
+#include "string.h"
+#include "alloc.h"
+#include "test.h"
+#include "IDT.h"
+#include "io.h"
 }
 
-#endif //KERNEL_H
+#include "screen.h"
+#include "stdio.h"
+#include "new.h"
+
+#endif //__KERNEL_H_

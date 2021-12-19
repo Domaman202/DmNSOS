@@ -1,3 +1,4 @@
+#include "include/string.h"
 #include "include/alloc.h"
 
 void mem_init(void) {
@@ -89,5 +90,5 @@ void* malloc(size_t size) {
 }
 
 void free(void* ptr) {
-    ((mem_block*) ((uintptr_t) ptr - sizeof(mem_block)))->flags = 0x0;
+    ((mem_block *) ((uintptr_t) ptr - sizeof(mem_block)))->flags = 0x0;
 }

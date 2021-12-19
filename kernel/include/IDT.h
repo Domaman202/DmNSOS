@@ -1,11 +1,8 @@
-#ifndef IDT_H
-#define IDT_H
+#ifndef __IDT_H_
+#define __IDT_H_
 
 #include "screen.h"
 #include "io.h"
-
-char getchar();
-char* readline();
 
 extern void int_general();		// Default interrupt routine
 extern void int_0();
@@ -41,7 +38,7 @@ extern void int_29();
 extern void int_30();
 extern void int_31();
 extern void int_32();
-extern void int_33(int a);			// Keyboard interrupt
+extern void int_33();			// Keyboard interrupt
 extern void int_34();
 extern void int_35();
 extern void int_36();
@@ -126,4 +123,5 @@ void isr_47();
 void idt_entry(unsigned int entry, void* offset, unsigned short selector, unsigned char flag);
 
 void idt_init();
-#endif //IDT_H
+
+#endif //__IDT_H_

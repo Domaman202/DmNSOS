@@ -1,8 +1,7 @@
-#ifndef ALLOC_H
-#define ALLOC_H
+#ifndef __ALLOC_H_
+#define __ALLOC_H_
 
 #include "stdint.h"
-#include "string.h"
 
 #define MEM_START ((void *) 0x2000000)
 #define MEM_SPACE 536870912
@@ -21,4 +20,4 @@ void* calloc(size_t num, size_t size);
 void* malloc(size_t);
 void free(void*);
 
-#endif //ALLOC_H
+#endif //__ALLOC_H_

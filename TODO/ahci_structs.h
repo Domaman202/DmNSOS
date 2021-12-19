@@ -1,5 +1,5 @@
-#ifndef __AHCI_STRUCTS_H
-#define __AHCI_STRUCTS_H
+#ifndef __AHCI_STRUCTS_H_
+#define __AHCI_STRUCTS_H_
 
 #include "stdint.h"
 
