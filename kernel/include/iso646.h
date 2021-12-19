@@ -7,8 +7,8 @@
   *===-----------------------------------------------------------------------===
   */
 
-#ifndef __ISO646_H_
-#define __ISO646_H_
+#ifndef __ISO646_H
+#define __ISO646_H
 
 #ifndef __cplusplus
 #define and    &&
@@ -24,4 +24,4 @@
 #define xor_eq ^=
 #endif
 
-#endif /* __ISO646_H_ */
+#endif /* __ISO646_H */

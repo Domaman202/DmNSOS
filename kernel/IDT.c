@@ -1,4 +1,7 @@
 #include "include/IDT.h"
+#include "include/keyboardkeys.h"
+
+char __currentChar = -1;
 
 void idt_init() {
     unsigned int i;
@@ -65,8 +68,35 @@ void idt_init() {
     asm("lidt (%0)" : : "p"(&idt));			// Load the IDT struct
 }
 
-void idt_entry(unsigned int entry, void* offset, unsigned short selector, unsigned char flag)
-{
+char getchar() {
+    while(1) {
+        uint8_t charKey = read_port(0x60);
+        char key = getchar_keyboard(charKey).key;
+        if(key!=' ') {
+            write_port(0x60, 0);
+            return key;
+        }
+    }
+}
+
+char* readline() {
+    char* output = "";
+    while (1) {
+        char char_ = getchar();
+        if(char_=='\n') {
+            break;
+        }
+
+        print_char(char_);
+        if(char_!='\b')
+            output = appendCharToCharArray(output, char_);
+    }
+
+    println();
+    return output;
+}
+
+void idt_entry(unsigned int entry, void* offset, unsigned short selector, unsigned char flag) {
     unsigned int offsetinteger = (unsigned int)offset;
     idttable[entry].offset1 = offsetinteger & 0xFFFF;
     idttable[entry].selector = selector;
@@ -145,16 +175,22 @@ void isr_15(){
 }
 void isr_16(){
     write_port(0x20,0x20);
-    println_string("isr_16 Coprocessor Error was called");
+
+    clear_vga_buffer(&vga_buffer);
+    println_string("Coprocessor Error was called");
+    block();
 }
+
 void isr_17(){
     write_port(0x20,0x20);
     println_string("isr_17 was called");
 }
+
 void isr_18(){
     write_port(0x20,0x20);
     println_string("isr_18 was called");
 }
+
 void isr_19(){
     write_port(0x20,0x20);
     println_string("isr_19 was called");
@@ -215,17 +251,13 @@ void isr_32(){
 }
 
 void isr_33() {
-    //keyboard
-    uint8_t scancode = read_port(0x60);
-    write_port(0x20, 0x20);
-    //
-//    print_char(scancode);
-    //
-//    if (scancode < 129) {
-    char *str = "   ";
-    itoa(str, scancode);
-    println_string(str);
-//    }
+//    uint8_t scancode = read_port(0x60);
+//
+//    struct KeyboardKey key = getchar_keyboard(scancode);
+//    if(scancode!=0) __currentChar = key.key;
+//    else __currentChar = -1;
+//
+//    write_port(0x60, 0);
 }
 
 void isr_34(){

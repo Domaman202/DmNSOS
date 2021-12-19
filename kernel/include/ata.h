@@ -1,5 +1,5 @@
-#ifndef __ATA_H_
-#define __ATA_H_
+#ifndef ATA_H
+#define ATA_H
 
 #include "ahci_structs.h"
 #include "ata_structs.h"
@@ -22,4 +22,4 @@ int security_erase_unit(HBA_PORT *port, uint8_t compare_master, uint8_t enhanced
 int security_freeze_lock(HBA_PORT *port);
 int security_disable_password(HBA_PORT *port, uint8_t compare_master, uint8_t *password);
 
-#endif //__ATA_H_
+#endif //ATA_H

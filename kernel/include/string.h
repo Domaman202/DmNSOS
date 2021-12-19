@@ -1,5 +1,5 @@
-#ifndef __STRING_H_
-#define __STRING_H_
+#ifndef STRING_H
+#define STRING_H
 
 #include "stdint.h"
 
@@ -8,4 +8,4 @@ void* memset(void* dst, char value, size_t count);
 
 void byte_swap(uint8_t *data, int len);
 
-#endif //__STRING_H_
+#endif //STRING_H
