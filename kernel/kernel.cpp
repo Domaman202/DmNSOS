@@ -6,9 +6,7 @@ namespace DmNSOS {
         idt_init();
         mem_init();
 
-        println_string("/=>DmN<=\\");
-        println_string("|=> - <=|");
-        println_string("\\=>SOS<=/");
+        println_string("DmNSOS");
         println_string("Version 0.1");
         while (1) {
             print_string("> ");
