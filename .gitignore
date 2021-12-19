@@ -1,4 +1,4 @@
 .idea
 
 kernel/*.o
-kernel.elf
+os.elf
