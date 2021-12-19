@@ -1,8 +1,10 @@
 #ifndef __IDT_H_
 #define __IDT_H_
 
-#include "screen.h"
 #include "io.h"
+
+char getchar();
+char* readline();
 
 extern void int_general();		// Default interrupt routine
 extern void int_0();

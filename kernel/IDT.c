@@ -1,4 +1,34 @@
+#include "include/keyboardkeys.h"
+#include "include/screen.h"
 #include "include/IDT.h"
+
+char getchar() {
+    while(1) {
+        uint8_t charKey = read_port(0x60);
+        char key = getchar_keyboard(charKey).key;
+        if(key!=' ') {
+            write_port(0x60, 0);
+            return key;
+        }
+    }
+}
+
+char* readline() {
+    char* output = "";
+    while (1) {
+        char char_ = getchar();
+        if(char_=='\n') {
+            break;
+        }
+
+        vga_putchar(char_);
+        if(char_!='\b')
+            output = appendCharToCharArray(output, char_);
+    }
+
+    print_string("");
+    return output;
+}
 
 void idt_init() {
     unsigned int i;
@@ -214,18 +244,18 @@ void isr_32(){
 //	println_string("isr_32 (IRQ 0: Programmable Interrupt Timer) was called");
 }
 
-void isr_33() {
-    //keyboard
-    uint8_t scancode = read_port(0x60);
-    write_port(0x20, 0x20);
-    //
-//    print_char(scancode);
-    //
-//    if (scancode < 129) {
-    char *str = "   ";
-    itoa(str, scancode);
-    println_string(str);
-//    }
+void isr_33() { // TODO:
+//    //keyboard
+//    uint8_t scancode = read_port(0x60);
+//    write_port(0x20, 0x20);
+//    //
+////    print_char(scancode);
+//    //
+////    if (scancode < 129) {
+//    char *str = "   ";
+//    itoa(str, scancode);
+//    println_string(str);
+////    }
 }
 
 void isr_34(){
