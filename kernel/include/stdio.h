@@ -82,6 +82,10 @@ namespace DmNSOS {
         }
 
         virtual int putc(int c) override {
+            if (c == '\n') {
+                vga_nln();
+                return '\n';
+            }
             checkln();
             vga_buffer[vga_x + (vga_y * vga_w)] = vga_entry(c);
             vga_x++;

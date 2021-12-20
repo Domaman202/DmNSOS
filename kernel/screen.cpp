@@ -68,5 +68,5 @@ void print_string(char *str) {
 
 void println_string(char *str) {
     print_string(str);
-    vga_nln();
+    print_char('\n');
 }
