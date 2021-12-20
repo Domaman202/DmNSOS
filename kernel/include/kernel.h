@@ -3,7 +3,6 @@
 
 extern "C" {
 #include "stdlib.h"
-#include "stddef.h"
 #include "setjmp.h"
 #include "string.h"
 #include "alloc.h"
@@ -12,6 +11,7 @@ extern "C" {
 #include "io.h"
 }
 
+#include "stddef.h"
 #include "screen.h"
 #include "stdio.h"
 #include "new.h"

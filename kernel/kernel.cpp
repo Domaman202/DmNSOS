@@ -13,7 +13,7 @@ namespace DmNSOS {
         println_string("/=>DmN<=\\");
         println_string("/=> - <=\\");
         println_string("/=>SOS<=\\");
-        println_string("Version 0.1");
+        println_string("Version 0.2");
         while (1) {
             print_string("> ");
             char *line = readline();
