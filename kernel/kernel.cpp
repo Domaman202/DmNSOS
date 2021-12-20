@@ -25,7 +25,7 @@ namespace DmNSOS {
                 println_string("Hello!");
             } else {
                 print_string(line);
-                println_string(">: not found");
+                println_string(": not found");
             }
 
             free(line);
