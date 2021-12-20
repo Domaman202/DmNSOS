@@ -20,7 +20,7 @@ namespace DmNSOS {
             vga_nln();
 
             if (strcmp(line, "exit") == 0)
-                return;
+                break;
             else if (strcmp(line, "hello") == 0)
                 println_string("Hello!");
             else {
