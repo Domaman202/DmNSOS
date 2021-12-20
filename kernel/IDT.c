@@ -17,7 +17,7 @@ char getchar() {
 
 char* readline() {
     uint8_t i = 0;
-    char* buf = malloc(0);
+    char* buf = calloc(256, sizeof(char));
     while (1) {
         char char_ = getchar();
         if (char_ == '\n')
