@@ -30,12 +30,15 @@ EXTERN_C_END
 /// CLASSES AND STRUCTURES
 
 #ifndef __cplusplus
-typedef struct FILE FILE;
+typedef struct {
+  void* stream;
+} FILE;
 #else
 namespace DmNSOS {
     class stream {
     public:
-        virtual int getc() = 0;
+        virtual void rmc(void) = 0;
+        virtual int getc(void) = 0;
         virtual int putc(int c) = 0;
     };
 
@@ -45,7 +48,12 @@ namespace DmNSOS {
         int32_t size;
         int32_t offset;
 
-        virtual int getc() override {
+        virtual void rmc(void) override {
+            buf[offset] = EOF;
+            offset--;
+        }
+
+        virtual int getc(void) override {
             if (offset == size)
                 return EOF;
             return buf[offset++];
@@ -60,12 +68,23 @@ namespace DmNSOS {
 
     class vga_stream : public stream {
     public:
+        virtual void rmc(void) override {
+            vga_x--;
+            if (vga_x < 0) {
+                vga_x = 0;
+                vga_y--;
+            }
+            vga_buffer[vga_x + (vga_y * vga_w)] = vga_entry(0);
+        }
+
         virtual int getc() override {
             return EOF; // TODO: implement
         }
 
         virtual int putc(int c) override {
-            vga_putchar((char) c);
+            checkln();
+            vga_buffer[vga_x + (vga_y * vga_w)] = vga_entry(c);
+            vga_x++;
             return c;
         }
     };
@@ -83,6 +102,7 @@ extern FILE* stdout;
 /// FUNCTIONS
 
 EXTERN_C_START
+void frmc(FILE *stream);
 int fgetc(FILE *stream);
 int fputc(int c, FILE *stream);
 void setbuf(FILE *stream, char *buf);

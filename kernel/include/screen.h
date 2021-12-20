@@ -10,14 +10,14 @@ extern uint16_t* vga_buffer;
 extern uint8_t vga_w, vga_h, vga_x, vga_y;
 
 EXTERN_C_START
-uint16_t vga_entry(unsigned char ch);
+uint16_t vga_entry(unsigned char);
 void clear_vga_buffer(void);
 void init_vga(void);
 void checkln(void);
 void vga_nln(void);
-void vga_putchar(char ch);
-void print_string(char *str);
-void println_string(char *str);
+void print_char(char);
+void print_string(char*);
+void println_string(char*);
 EXTERN_C_END
 
 #endif //__SCREEN_H_

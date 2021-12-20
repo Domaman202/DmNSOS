@@ -1,6 +1,7 @@
 #include "include/keyboardkeys.h"
 #include "include/screen.h"
 #include "include/string.h"
+#include "include/stdio.h"
 #include "include/IDT.h"
 
 char getchar() {
@@ -15,20 +16,24 @@ char getchar() {
 }
 
 char* readline() {
-    char* output = "";
+    uint8_t i = 0;
+    char* buf = malloc(0);
     while (1) {
         char char_ = getchar();
-        if(char_=='\n') {
+        if (char_ == '\n')
             break;
+
+        if (char_ == '\b' && i > 0) {
+            i--;
+            frmc(stdout);
+            buf[strlen(buf) - 1] = '\0';
+        } else {
+            i++;
+            print_char(char_);
+            buf = appendCharToCharArray(buf, char_);
         }
-
-        vga_putchar(char_);
-        if(char_!='\b')
-            output = appendCharToCharArray(output, char_);
     }
-
-    print_string("");
-    return output;
+    return buf;
 }
 
 void idt_init() {

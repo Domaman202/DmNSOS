@@ -2,6 +2,10 @@
 
 FILE *stdout = nullptr;
 
+void frmc(FILE *stream) {
+    stream->stream->rmc();
+}
+
 int fgetc(FILE *stream) {
     return stream->stream->getc();
 }

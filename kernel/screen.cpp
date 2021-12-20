@@ -54,10 +54,8 @@ void vga_nln(void) {
     checkln();
 }
 
-void vga_putchar(char ch) {
-    checkln();
-    vga_buffer[vga_x + (vga_y * vga_w)] = vga_entry(ch);
-    vga_x++;
+void print_char(char c) {
+    fputc(c, stdout);
 }
 
 void print_string(char *str) {
