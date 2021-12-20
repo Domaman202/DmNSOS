@@ -27,6 +27,8 @@ namespace DmNSOS {
                 print_string(line);
                 println_string(": not found");
             }
+
+            free(line);
         }
     }
 }
