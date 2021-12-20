@@ -19,11 +19,11 @@ namespace DmNSOS {
             char *line = readline();
             vga_nln();
 
-            if (strcmp(line, "exit") == 0) {
+            if (strcmp(line, "exit") == 0)
                 return;
-            } else if (strcmp(line, "hello") == 0) {
+            else if (strcmp(line, "hello") == 0)
                 println_string("Hello!");
-            } else {
+            else {
                 print_string(line);
                 println_string(": not found");
             }
