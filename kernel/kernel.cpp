@@ -17,6 +17,7 @@ namespace DmNSOS {
         while (1) {
             print_string("> ");
             char *line = readline();
+            vga_nln();
 
             if (strcmp(line, "exit") == 0) {
                 return;
