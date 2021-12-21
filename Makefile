@@ -10,3 +10,5 @@ build:
 
 	rm ./kernel/kernel.a
 	rm *.bin
+all:
+	echo "use `make build` for build"
