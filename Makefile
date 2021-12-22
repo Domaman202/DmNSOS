@@ -1,14 +1,23 @@
+GCC_CONFIG := "-m32 -w -fno-pie -nostdlib -ffreestanding"
+GPP_CONFIG := ${GCC_CONFIG}" -fno-exceptions -fno-rtti -fpermissive"
+
+build_mls:
+	make -C ./mls build_mls GCC_CONFIG=${GCC_CONFIG} GPP_CONFIG=${GPP_CONFIG}
+	make build
 build:
-	make -C ./kernel build
+	make -C ./kernel build GCC_CONFIG=${GCC_CONFIG} GPP_CONFIG=${GPP_CONFIG}
 	make -C ./bootloader build
 
-	ld -m elf_i386 -o kernel.bin -T link.ld ./kernel/kernel.a --oformat binary --entry main
+	if [ -f "mls.o" ]; then echo "MLS Enabled!"; else make -C ./mls build GCC_CONFIG=${GCC_CONFIG} GPP_CONFIG=${GPP_CONFIG}; fi
+
+	ld -m elf_i386 -o kernel.bin -T link.ld kernel_b.o mls.o --oformat binary --entry main
 
 	dd if=./kernel.bin of=kernel_.bin conv=sync &> /dev/null && sync
 	cat ./bootloader.bin ./kernel_.bin > os.bin
 	dd if=os.bin of=disk.img conv=notrunc
 
-	rm ./kernel/kernel.a
+	rm *.o
 	rm *.bin
+
 all:
-	echo "use `make build` for build"
+	echo "git repository => https://github.com/Domaman202/DmNSOS"

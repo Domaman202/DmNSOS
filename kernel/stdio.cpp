@@ -2,6 +2,10 @@
 
 FILE *stdout = nullptr;
 
+int fclose(FILE *stream) {
+    return stream->stream->fclose();
+}
+
 void frmc(FILE *stream) {
     stream->stream->rmc();
 }

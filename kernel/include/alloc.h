@@ -4,7 +4,7 @@
 #include "stdint.h"
 
 #define MEM_START ((void *) 0x2000000)
-#define MEM_SPACE 1024*1024
+#define MEM_SPACE 1024*1024*1024*1024
 #define MEM_END MEM_START + MEM_SPACE
 
 typedef struct mem_block {

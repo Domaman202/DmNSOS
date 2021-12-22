@@ -37,6 +37,7 @@ typedef struct {
 namespace DmNSOS {
     class stream {
     public:
+        virtual int fclose() = 0;
         virtual void rmc(void) = 0;
         virtual int getc(void) = 0;
         virtual int putc(int c) = 0;
@@ -47,6 +48,12 @@ namespace DmNSOS {
         char* buf;
         int32_t size;
         int32_t offset;
+
+        virtual int fclose(void) override {
+            free(this);
+            free(buf);
+            return 0;
+        }
 
         virtual void rmc(void) override {
             buf[offset] = EOF;
@@ -68,6 +75,10 @@ namespace DmNSOS {
 
     class vga_stream : public stream {
     public:
+        virtual int fclose(void) override {
+            return EOF;
+        }
+
         virtual void rmc(void) override {
             vga_x--;
             if (vga_x < 0) {
@@ -106,6 +117,7 @@ extern FILE* stdout;
 /// FUNCTIONS
 
 EXTERN_C_START
+int fclose(FILE *stream);
 void frmc(FILE *stream);
 int fgetc(FILE *stream);
 int fputc(int c, FILE *stream);

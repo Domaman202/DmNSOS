@@ -5,7 +5,7 @@ extern "C" void __cxa_pure_virtual() {
 }
 
 namespace DmNSOS {
-    extern "C" void kmain(void) {
+    extern "C" __attribute__((noreturn)) void kmain(void) {
         mem_init();
         init_vga();
         idt_init();
