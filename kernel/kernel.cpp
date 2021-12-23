@@ -24,7 +24,7 @@ namespace DmNSOS {
             else if (strcmp(line, "hello") == 0)
                 println_string("Hello!");
             else if (strcmp(line, "test") == 0)
-                test();
+                println_string("test!");
             else {
                 print_string(line);
                 println_string(" <: not found");

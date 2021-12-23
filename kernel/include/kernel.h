@@ -6,7 +6,6 @@ extern "C" {
 #include "setjmp.h"
 #include "string.h"
 #include "alloc.h"
-#include "test.h"
 #include "IDT.h"
 #include "io.h"
 }
