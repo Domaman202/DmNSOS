@@ -7,6 +7,21 @@ void* memcpy(void* dst, const void* src, size_t count) {
     return dst;
 }
 
+void* memmove(void *dest, const void *src, size_t len) {
+    char *d = dest;
+    const char *s = src;
+    if (d < s)
+        while (len--)
+            *d++ = *s++;
+    else {
+        char *lasts = s + (len - 1);
+        char *lastd = d + (len - 1);
+        while (len--)
+            *lastd-- = *lasts--;
+    }
+    return dest;
+}
+
 void* memset(void* dst, char value, size_t count) {
     while (count-- > 0)
         ((char*) dst)[count] = value;
@@ -25,6 +40,10 @@ void byte_swap(uint8_t *data, int len) {
 
 char* strcpy(char *dest, const char *src) {
     return memcpy(dest, src, strlen(src) + 1);
+}
+
+char* strncpy(char *dest, const char *src, size_t n) {
+    return memcpy(dest, src, n);
 }
 
 size_t strlen(const char* str){
