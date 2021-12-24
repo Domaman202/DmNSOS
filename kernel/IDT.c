@@ -1,7 +1,7 @@
 #include "include/keyboardkeys.h"
 #include "include/screen.h"
-#include "include/string.h"
-#include "include/stdio.h"
+#include <string.h>
+#include <stdio.h>
 #include "include/IDT.h"
 
 char getchar() {

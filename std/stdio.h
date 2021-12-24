@@ -7,7 +7,7 @@
 #include "stddef.h"
 
 EXTERN_C_START
-#include "screen.h"
+#include "../kernel/include/screen.h"
 #include "alloc.h"
 EXTERN_C_END
 

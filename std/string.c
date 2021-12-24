@@ -1,5 +1,5 @@
-#include "include/string.h"
-#include "include/alloc.h"
+#include "string.h"
+#include "alloc.h"
 
 void* memcpy(void* dst, const void* src, size_t count) {
     while (count-- > 0)
@@ -73,4 +73,15 @@ char* appendCharToCharArray(char* array, char c) {
     ret[len] = c;
     ret[len + 1] = '\0';
     return ret;
+}
+
+void* memchr(const void* src_void, int c, size_t length) {
+    const unsigned char *src = (const unsigned char*) src_void;
+
+    while (length-- > 0) {
+        if (*src == c)
+            return (void*) src;
+        src++;
+    }
+    return 0;
 }

@@ -5,7 +5,7 @@
 #define container_of(ptr, type, member) ({const typeof(((type *)0)->member) *__mptr = (ptr);(type *)((char *)__mptr - offsetof(type, member));})
 
 #define NULL 0
-#define nullptr 0
+#define nullptr NULL
 
 #define VGA_ADDRESS 0xb8000
 

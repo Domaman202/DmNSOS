@@ -5,7 +5,7 @@
 #ifndef KEYBOARDKEYS_H
 #define KEYBOARDKEYS_H
 
-#include "stdbool.h"
+#include <stdbool.h>
 
 struct KeyboardKey {
     int code;

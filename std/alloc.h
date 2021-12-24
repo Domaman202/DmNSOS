@@ -15,9 +15,12 @@ typedef struct mem_block {
 void mem_init(void);
 size_t mb_size(mem_block*);
 mem_block* split_heap(size_t);
-void* realloc(void* mem, size_t size);
+
+void* realloc(void*, size_t);
 void* calloc(size_t num, size_t size);
 void* malloc(size_t);
 void free(void*);
+
+inline void* alloca(size_t size) {return __builtin_alloca(size);}
 
 #endif //__ALLOC_H_
