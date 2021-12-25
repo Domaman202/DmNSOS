@@ -10,9 +10,9 @@ extern "C" {
 #include "io.h"
 }
 
-#include "../../std/stddef.h"
-#include "screen.h"
-#include "../../std/stdio.h"
-#include "../../std/new.h"
+#include <stddef.h>
+#include <screen.h>
+#include <stdio.h>
+#include <new.h>
 
 #endif //__KERNEL_H_

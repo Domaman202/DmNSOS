@@ -83,6 +83,7 @@ void* calloc(size_t num, size_t size) {
     uint8_t* mem = malloc(i);
     for (i--; i != -1; i--)
         mem[i] = 0;
+    return mem;
 }
 
 void* malloc(size_t size) {
