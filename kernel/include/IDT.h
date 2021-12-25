@@ -1,8 +1,6 @@
 #ifndef __IDT_H_
 #define __IDT_H_
 
-#include "io.h"
-
 char getchar();
 char* readline();
 

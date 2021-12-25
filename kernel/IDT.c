@@ -1,6 +1,7 @@
 #include "include/keyboardkeys.h"
 #include "include/screen.h"
 #include "include/IDT.h"
+#include "include/io.h"
 #include <string.h>
 #include <stdio.h>
 

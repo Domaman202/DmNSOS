@@ -1,9 +1,7 @@
 #ifndef __NEW_H_
 #define __NEW_H_
 
-extern "C" {
-#include "alloc.h"
-}
+#include "stdint.h"
 
 void* operator new (size_t count);
 void* operator new[] (size_t count);

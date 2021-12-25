@@ -1,5 +1,9 @@
 #include "new.h"
 
+extern "C" {
+#include "alloc.h"
+}
+
 void* operator new (size_t count) {
     return malloc(count);
 }

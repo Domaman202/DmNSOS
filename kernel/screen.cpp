@@ -1,10 +1,16 @@
 #include "include/screen.h"
 #include <stdio.h>
 
+extern "C" {
+#include "include/io.h"
+}
+
 uint16_t* vga_buffer = (uint16_t*) VGA_ADDRESS;
 uint8_t vga_w = 80;
 uint8_t vga_h = 25;
 uint8_t vga_x, vga_y;
+
+// VGA
 
 uint16_t vga_entry(unsigned char ch) {
     uint16_t ax;
@@ -28,13 +34,13 @@ void clear_vga_buffer(void) {
     vga_y = 0;
 }
 
-void init_vga(void) {
+void vga_init(void) {
     stdout = new FILE;
     stdout->stream = new DmNSOS::vga_stream;
     clear_vga_buffer();
 }
 
-void checkln(void) {
+void vga_checkln(void) {
     if (vga_x > vga_w)
         vga_nln();
     if (vga_y == vga_h) {
@@ -51,8 +57,31 @@ void checkln(void) {
 void vga_nln(void) {
     vga_x = 0;
     vga_y++;
-    checkln();
+    vga_checkln();
 }
+
+// CURSOR
+
+void vga_enable_cursor(uint8_t start, uint8_t end) {
+	write_port(0x3D4, 0x0A);
+	write_port(0x3D5, (read_port(0x3D5) & 0xC0) | start);
+	write_port(0x3D4, 0x0B);
+	write_port(0x3D5, (read_port(0x3D5) & 0xE0) | end);
+}
+
+void vga_disable_cursor() {
+	write_port(0x3D4, 0x0A);
+	write_port(0x3D5, 0x20);
+}
+
+void vga_set_cursor(uint16_t pos) {
+	write_port(0x3D4, 0x0F);
+	write_port(0x3D5, (uint8_t) (pos & 0xFF));
+	write_port(0x3D4, 0x0E);
+	write_port(0x3D5, (uint8_t) ((pos >> 8) & 0xFF));
+}
+
+// TODO: MOVE TO STDIO.CPP
 
 void print_char(char c) {
     fputc(c, stdout);

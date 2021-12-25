@@ -7,7 +7,7 @@ extern "C" void __cxa_pure_virtual() {
 namespace DmNSOS {
     extern "C" __attribute__((noreturn)) void kmain(void) {
         mem_init();
-        init_vga();
+        vga_init();
         idt_init();
 
         println_string("/=>DmN<=\\");
@@ -23,9 +23,19 @@ namespace DmNSOS {
                 break;
             else if (strcmp(line, "hello") == 0)
                 println_string("Hello!");
-            else if (strcmp(line, "test") == 0)
-                println_string("test!");
-            else {
+            else if (strcmp(line, "test") == 0) {
+            	char* buf = calloc(80, 1);
+            	FILE file;
+            	setbuf(&file, buf);
+            	fputc('t', &file);
+            	fputc('e', &file);
+            	fputc('s', &file);
+            	fputc('t', &file);
+            	fputc('\n', &file);
+            	fputc('\0', &file);
+            	print_string(buf);
+            	fclose(&file);
+            } else {
                 print_string(line);
                 println_string(" <: not found");
             }
