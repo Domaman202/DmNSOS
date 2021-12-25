@@ -1,8 +1,8 @@
 #include "include/keyboardkeys.h"
 #include "include/screen.h"
+#include "include/IDT.h"
 #include <string.h>
 #include <stdio.h>
-#include "include/IDT.h"
 
 char getchar() {
     while(1) {
