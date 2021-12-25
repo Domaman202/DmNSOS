@@ -10,8 +10,8 @@ extern "C" {
 #include "io.h"
 }
 
+#include "screen.h"
 #include <stddef.h>
-#include <screen.h>
 #include <stdio.h>
 #include <new.h>
 

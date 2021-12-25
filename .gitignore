@@ -8,3 +8,4 @@ iso
 os.bin
 kernel.bin
 disk.img
+/build/
