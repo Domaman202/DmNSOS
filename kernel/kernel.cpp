@@ -24,17 +24,7 @@ namespace DmNSOS {
             else if (strcmp(line, "hello") == 0)
                 println_string("Hello!");
             else if (strcmp(line, "test") == 0) {
-            	char* buf = calloc(80, 1);
-            	FILE file;
-            	setbuf(&file, buf);
-            	fputc('t', &file);
-            	fputc('e', &file);
-            	fputc('s', &file);
-            	fputc('t', &file);
-            	fputc('\n', &file);
-            	fputc('\0', &file);
-            	print_string(buf);
-            	fclose(&file);
+
             } else {
                 print_string(line);
                 println_string(" <: not found");

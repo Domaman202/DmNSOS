@@ -27,7 +27,7 @@ uint16_t vga_entry(unsigned char ch) {
     return ax;
 }
 
-void clear_vga_buffer(void) {
+void vga_clear_buffer(void) {
     for (uint32_t i = 0; i < VGA_SIZE; i++)
         vga_buffer[i] = vga_entry(0);
     vga_x = 0;
@@ -37,7 +37,8 @@ void clear_vga_buffer(void) {
 void vga_init(void) {
     stdout = new FILE;
     stdout->stream = new DmNSOS::vga_stream;
-    clear_vga_buffer();
+    vga_clear_buffer();
+    vga_set_cursor(0);
 }
 
 void vga_checkln(void) {

@@ -85,7 +85,9 @@ namespace DmNSOS {
                 vga_x = 0;
                 vga_y--;
             }
-            vga_buffer[vga_x + (vga_y * vga_w)] = vga_entry(0);
+            uint16_t pos = vga_x + (vga_y * vga_w);
+            vga_buffer[pos] = vga_entry(0);
+            vga_set_cursor(pos);
         }
 
         virtual int getc() override {
@@ -98,7 +100,9 @@ namespace DmNSOS {
                 return '\n';
             }
             vga_checkln();
-            vga_buffer[vga_x + (vga_y * vga_w)] = vga_entry(c);
+            uint16_t pos = vga_x + (vga_y * vga_w);
+            vga_buffer[pos] = vga_entry(c);
+            vga_set_cursor(pos + 1);
             vga_x++;
             return c;
         }
