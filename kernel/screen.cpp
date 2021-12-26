@@ -16,9 +16,9 @@ uint16_t vga_entry(unsigned char ch) {
     uint16_t ax;
     uint8_t ah, al;
 
-    ah = 0x1;
+    ah = 0x0;
     ah <<= 4;
-    ah |= 0xf;
+    ah |= 0xC;
     ax = ah;
     ax <<= 8;
     al = ch;
