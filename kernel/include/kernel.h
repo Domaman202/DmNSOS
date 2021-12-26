@@ -2,8 +2,9 @@
 #define __KERNEL_H_
 
 #include <stdbool.h>
+#include <stddef.h>
 
-extern "C" bool check_A20(void);
-extern "C" void enable_A20(void);
+EXTERN_C bool check_A20line(void);
+EXTERN_C void enable_A20line(void);
 
 #endif //__KERNEL_H_

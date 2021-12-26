@@ -5,8 +5,8 @@
 ; Continues to A20_on if A20 line is set.
 ; Written by Elad Ashkcenazi
 
-[global check_A20]
-check_A20:
+[global check_A20line]
+check_A20line:
 	pushad
 	mov edi,0x112345  	;odd megabyte address.
 	mov esi,0x012345  	;even megabyte address.
@@ -20,8 +20,8 @@ check_A20:
 	check_A20_exit:
 	ret
 
-[global enable_A20]
-enable_A20:
+[global enable_A20line]
+enable_A20line:
         cli
 
         call    a20wait

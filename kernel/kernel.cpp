@@ -21,7 +21,6 @@ extern "C" void __cxa_pure_virtual() {
     println_string("Called pure virtual function!");
 }
 
-namespace DmNSOS {
 extern "C" void __attribute__((noreturn)) kmain(void) {
 	mem_init();
 	vga_init();
@@ -32,8 +31,8 @@ extern "C" void __attribute__((noreturn)) kmain(void) {
 	println_string("/=>SOS<=\\");
 	println_string("Version 0.2");
 
-	if (check_A20()) {
-		enable_A20();
+	if (check_A20line()) {
+		enable_A20line();
 		println_stringc("A20 line started!", 0x0A);
 	} else println_stringc("A20 line not supported!", 0x0C);
 
@@ -55,5 +54,4 @@ extern "C" void __attribute__((noreturn)) kmain(void) {
 
 		free(line);
 	}
-}
 }
