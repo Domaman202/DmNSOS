@@ -1,4 +1,21 @@
+/// INCLUDE SECTOR \\\
+
+extern "C" {
+#include <stdlib.h>
+#include <setjmp.h>
+#include <string.h>
+#include <alloc.h>
+#include "include/IDT.h"
+#include "include/io.h"
+}
+
 #include "include/kernel.h"
+#include "include/screen.h"
+#include <stddef.h>
+#include <stdio.h>
+#include <new.h>
+
+/// CODE SECTOR \\\
 
 extern "C" void __cxa_pure_virtual() {
     println_string("Called pure virtual function!");
@@ -14,6 +31,12 @@ extern "C" void __attribute__((noreturn)) kmain(void) {
 	println_string("/=> - <=\\");
 	println_string("/=>SOS<=\\");
 	println_string("Version 0.2");
+
+	if (check_A20()) {
+		enable_A20();
+		println_stringc("A20 line started!", 0x0A);
+	} else println_stringc("A20 line not supported!", 0x0C);
+
 	while (1) {
 		print_string("> ");
 		char *line = readline();

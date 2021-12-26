@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#define VGA_DEFAULT_COLOR 0x0C
+#define VGA_DEFAULT_COLOR 0x09
 
 #define VGA_SIZE vga_w * vga_h
 

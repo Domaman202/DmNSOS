@@ -100,7 +100,7 @@ public:
 	}
 
 	virtual int putc(int c) override {
-		return putc(c, 0x0C);
+		return putc(c, VGA_DEFAULT_COLOR);
 	}
 
 	virtual int putc(int ch, uint8_t c) override {

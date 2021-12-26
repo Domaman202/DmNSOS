@@ -1,18 +1,9 @@
 #ifndef __KERNEL_H_
 #define __KERNEL_H_
 
-extern "C" {
-#include <stdlib.h>
-#include <setjmp.h>
-#include <string.h>
-#include <alloc.h>
-#include "IDT.h"
-#include "io.h"
-}
+#include <stdbool.h>
 
-#include "screen.h"
-#include <stddef.h>
-#include <stdio.h>
-#include <new.h>
+extern "C" bool check_A20(void);
+extern "C" void enable_A20(void);
 
 #endif //__KERNEL_H_
