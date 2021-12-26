@@ -30,7 +30,7 @@ char* readline() {
             buf[strlen(buf) - 1] = '\0';
         } else {
             i++;
-            print_char(char_);
+            print_charc(char_, 0x02);
             buf = appendCharToCharArray(buf, char_);
         }
     }

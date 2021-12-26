@@ -18,6 +18,10 @@ int fputc(int c, FILE *stream) {
     return stream->stream->putc(c);
 }
 
+int fputcc(int ch, uint8_t c, FILE *stream) {
+    return stream->stream->putc(ch, c);
+}
+
 void setbuf(FILE *file, char *buf) {
     DmNSOS::buf_stream* stream = new DmNSOS::buf_stream;
     file->stream = stream;

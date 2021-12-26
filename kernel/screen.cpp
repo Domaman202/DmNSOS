@@ -12,24 +12,19 @@ uint8_t vga_x, vga_y;
 
 // VGA
 
-uint16_t vga_entry(unsigned char ch) {
+uint16_t __attribute__((gnu_inline)) vga_cc(register unsigned char ch, register uint8_t c) {
     uint16_t ax;
-    uint8_t ah, al;
 
-    ah = 0x0;
-    ah <<= 4;
-    ah |= 0xC;
-    ax = ah;
+    ax = c;
     ax <<= 8;
-    al = ch;
-    ax |= al;
+    ax |= ch;
 
     return ax;
 }
 
 void vga_clear_buffer(void) {
     for (uint32_t i = 0; i < VGA_SIZE; i++)
-        vga_buffer[i] = vga_entry(0);
+        vga_buffer[i] = vga_cc(0, VGA_DEFAULT_COLOR);
     vga_x = 0;
     vga_y = 0;
 }
@@ -47,11 +42,11 @@ void vga_checkln(void) {
     if (vga_y == vga_h) {
         vga_x = 0;
         vga_y = vga_h - 1;
-        for (uint16_t i = 1; i < vga_h; i++)
-            for (uint16_t j = 0; j < vga_w; j++)
+        for (uint8_t i = 1; i < vga_h; i++)
+            for (uint8_t j = 0; j < vga_w; j++)
                 vga_buffer[((i - 1) * vga_w) + j] = vga_buffer[(i * vga_w) + j];
-        for (uint16_t i = 0; i < vga_w; i++)
-            vga_buffer[(vga_w * (vga_h - 1)) + i] = vga_entry(0);
+        for (uint8_t i = 0; i < vga_w; i++)
+            vga_buffer[(vga_w * (vga_h - 1)) + i] = vga_cc(0, VGA_DEFAULT_COLOR);
     }
 }
 
@@ -88,6 +83,10 @@ void print_char(char c) {
     fputc(c, stdout);
 }
 
+void print_charc(char ch, uint8_t c) {
+    fputcc(ch, c, stdout);
+}
+
 void print_string(char *str) {
     uint32_t index = 0;
     while (str[index]) {
@@ -96,7 +95,20 @@ void print_string(char *str) {
     }
 }
 
+void print_stringc(char *str, uint8_t c) {
+    uint32_t index = 0;
+    while (str[index]) {
+        fputcc(str[index], c, stdout);
+        index++;
+    }
+}
+
 void println_string(char *str) {
     print_string(str);
-    print_char('\n');
+    fputc('\n', stdout);
+}
+
+void println_stringc(char *str, uint8_t c) {
+    print_stringc(str, c);
+    fputcc('\n', c, stdout);
 }
