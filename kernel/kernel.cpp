@@ -31,7 +31,8 @@ extern "C" void __attribute__((noreturn)) kmain(void) {
 	println_string("/=>SOS<=\\");
 	println_string("Version 0.2");
 
-	if (check_A20line()) {
+	check_A20line();
+	if (A20line) {
 		enable_A20line();
 		println_stringc("A20 line started!", 0x0A);
 	} else println_stringc("A20 line not supported!", 0x0C);

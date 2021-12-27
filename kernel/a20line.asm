@@ -14,9 +14,9 @@ check_A20line:
 	mov [edi],edi     	;(if A20 line is cleared the two pointers would point to the address 0x012345 that would contain 0x112345 (edi))
 	cmpsd             	;compare addresses to see if the're equivalent.
 	popad
-	mov ax, 1
+	mov word [A20line], 1
 	jne check_A20_exit 	;if not equivalent , A20 line is set.
-	mov ax, 0
+	mov word [A20line], 0
 	check_A20_exit:
 	ret
 
@@ -65,3 +65,7 @@ a20wait2:
         test    al,1
         jz      a20wait2
         ret
+
+[global A20line]
+A20line:
+	db 0
