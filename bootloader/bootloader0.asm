@@ -8,9 +8,12 @@ start:
     mov ax, 0
     mov ds, ax
     mov es, ax
+; Store the boot drive for later:
+    mov [BOOT_DRIVE], dl
 ; Load the second stage
 ; load AL sectors to ES:BX from drive DL
     mov bx, 0x7C00 + 512
+    mov dl, [BOOT_DRIVE]
     
     push dx
     mov ah, 0x02 ; 0x13 read sector
