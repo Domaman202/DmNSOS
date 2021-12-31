@@ -1,4 +1,4 @@
-GCC_CONFIG := "-m32 -std=gnu17 -nostdinc -w -fno-pie -nostdlib -ffreestanding -I"$(CURDIR)"/inc/"
+GCC_CONFIG := "-m32 -std=gnu17 -nostdinc -w -fno-pie -nostdlib -ffreestanding -I"$(CURDIR)"/std/"
 GPP_CONFIG := ${GCC_CONFIG}" -nostdinc++ -fno-exceptions -fno-rtti -fpermissive"
 
 all:
