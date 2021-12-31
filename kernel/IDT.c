@@ -1,41 +1,7 @@
-#include "include/keyboardkeys.h"
-#include "include/screen.h"
 #include "include/IDT.h"
-#include "include/io.h"
-#include <string.h>
-#include <stdio.h>
+#include "include/keyboardkeys.h"
 
-char getchar() {
-    while(1) {
-        uint8_t charKey = read_port(0x60);
-        char key = getchar_keyboard(charKey).key;
-        if(key!=' ') {
-            write_port(0x60, 0);
-            return key;
-        }
-    }
-}
-
-char* readline() {
-    uint8_t i = 0;
-    char* buf = calloc(256, sizeof(char));
-    while (1) {
-        char char_ = getchar();
-        if (char_ == '\n')
-            break;
-
-        if (char_ == '\b' && i > 0) {
-            i--;
-            frmc(stdout);
-            buf[strlen(buf) - 1] = '\0';
-        } else {
-            i++;
-            print_charc(char_, 0x02);
-            buf = appendCharToCharArray(buf, char_);
-        }
-    }
-    return buf;
-}
+char __currentChar = -1;
 
 void idt_init() {
     unsigned int i;
@@ -102,8 +68,35 @@ void idt_init() {
     asm("lidt (%0)" : : "p"(&idt));			// Load the IDT struct
 }
 
-void idt_entry(unsigned int entry, void* offset, unsigned short selector, unsigned char flag)
-{
+char getchar() {
+    while(1) {
+        uint8_t charKey = read_port(0x60);
+        char key = getchar_keyboard(charKey).key;
+        if(key!=' ') {
+            write_port(0x60, 0);
+            return key;
+        }
+    }
+}
+
+char* readline() {
+    char* output = "";
+    while (1) {
+        char char_ = getchar();
+        if(char_=='\n') {
+            break;
+        }
+
+        print_char(char_);
+        if(char_!='\b')
+            output = appendCharToCharArray(output, char_);
+    }
+
+    println();
+    return output;
+}
+
+void idt_entry(unsigned int entry, void* offset, unsigned short selector, unsigned char flag) {
     unsigned int offsetinteger = (unsigned int)offset;
     idttable[entry].offset1 = offsetinteger & 0xFFFF;
     idttable[entry].selector = selector;
@@ -182,16 +175,22 @@ void isr_15(){
 }
 void isr_16(){
     write_port(0x20,0x20);
-    println_string("isr_16 Coprocessor Error was called");
+
+    clear_vga_buffer(&vga_buffer);
+    println_string("Coprocessor Error was called");
+    block();
 }
+
 void isr_17(){
     write_port(0x20,0x20);
     println_string("isr_17 was called");
 }
+
 void isr_18(){
     write_port(0x20,0x20);
     println_string("isr_18 was called");
 }
+
 void isr_19(){
     write_port(0x20,0x20);
     println_string("isr_19 was called");
@@ -251,18 +250,14 @@ void isr_32(){
 //	println_string("isr_32 (IRQ 0: Programmable Interrupt Timer) was called");
 }
 
-void isr_33() { // TODO:
-//    //keyboard
+void isr_33() {
 //    uint8_t scancode = read_port(0x60);
-//    write_port(0x20, 0x20);
-//    //
-////    print_char(scancode);
-//    //
-////    if (scancode < 129) {
-//    char *str = "   ";
-//    itoa(str, scancode);
-//    println_string(str);
-////    }
+//
+//    struct KeyboardKey key = getchar_keyboard(scancode);
+//    if(scancode!=0) __currentChar = key.key;
+//    else __currentChar = -1;
+//
+//    write_port(0x60, 0);
 }
 
 void isr_34(){

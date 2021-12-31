@@ -1,11 +1,11 @@
-#ifndef __KERNEL_H_
-#define __KERNEL_H_
+#ifndef KERNEL_H
+#define KERNEL_H
 
-#include <stdbool.h>
-#include <stddef.h>
+#include "setjmp.h"
+#include "screen.h"
+#include "alloc.h"
+#include "ahci.h"
+#include "IDT.h"
+#include "io.h"
 
-EXTERN_C bool A20line;
-EXTERN_C void check_A20line(void);
-EXTERN_C void enable_A20line(void);
-
-#endif //__KERNEL_H_
+#endif //KERNEL_H

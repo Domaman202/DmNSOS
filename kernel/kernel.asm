@@ -4,5 +4,4 @@ main:
     [extern kmain]
     jmp kmain
 
-%include "a20line.asm"
 %include "int.asm"

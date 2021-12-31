@@ -1,19 +1,17 @@
-GCC_CONFIG := "-m32 -std=gnu17 -nostdinc -w -fno-pie -nostdlib -ffreestanding -I"$(CURDIR)"/std/"
-GPP_CONFIG := ${GCC_CONFIG}" -nostdinc++ -fno-exceptions -fno-rtti -fpermissive"
-
-all:
-	echo "git repository => https://github.com/Domaman202/DmNSOS"
-
-compile:
-	make -C ./std build GCC_CONFIG=${GCC_CONFIG} GPP_CONFIG=${GPP_CONFIG}
-	make -C ./kernel build GCC_CONFIG=${GCC_CONFIG} GPP_CONFIG=${GPP_CONFIG}
+build:
+	mkdir -p ./dist
+	make -C ./kernel build
 	make -C ./bootloader build
-
-	ld -m elf_i386 -o kernel.bin -T link.ld kernel_b.o std.o --oformat binary --entry main
-
-	dd if=./kernel.bin of=kernel_.bin conv=sync &> /dev/null && sync
-	cat ./bootloader.bin ./kernel_.bin > os.bin
+	dd if=./iso/kernel.bin of=kernel.bin conv=sync &> /dev/null && sync
+	cat ./iso/bootloader.bin ./kernel.bin > os.bin
 	dd if=os.bin of=disk.img conv=notrunc
 
-	rm *.o
-	rm *.bin
+	mv disk.img ./dist/disk.img
+	mv os.bin ./dist/os.bin
+
+	rm -d -r ./iso
+	rm -rf *.bin
+
+run:
+	make -C . build
+	qemu-system-i386 ./dist/disk.img
