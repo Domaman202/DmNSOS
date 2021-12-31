@@ -1,1 +1,11 @@
+.idea
+
+bootloader/bootloader0
+bootloader/bootloader1
+kernel/*.o
+iso
+
+os.bin
+kernel.bin
+disk.img
 /build/
