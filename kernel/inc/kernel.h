@@ -6,7 +6,6 @@
 #include "string.h"
 #include "unistd.h"
 #include "alloc.h"
-#include "ahci.h"
 #include "IDT.h"
 #include "io.h"
 
