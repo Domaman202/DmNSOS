@@ -14,15 +14,6 @@ inline void kmain() {
     println_string("\\=>  SOS  <=/");
     println_string(" \\=========/");
 
-    char line[80];
-
-    print_stringc("[MEMORY] [Start> ", 0x14);
-    println_stringc(itoa(line, (uintptr_t) MEM_START), 0x12);
-    print_stringc("[MEMORY] [End>   ", 0x14);
-    println_stringc(itoa(line, (uintptr_t) MEM_END), 0x12);
-    print_stringc("[MEMORY] [Space> ", 0x14);
-    println_stringc(itoa(line, MEM_SPACE), 0x12);
-
     while (1) {
         print_string("> ");
 
@@ -33,11 +24,20 @@ inline void kmain() {
         if (strcmp(line, "clear") == 0) {
             vga_clear_buffer();
             continue;
-        } else if (strcmp(line, "hello"))
+        } else if (strcmp(line, "memory") == 0) {
+            char l[80];
+            print_stringc("[MEMORY] [Start> ", 0x14);
+            println_stringc(itoa(l, (uintptr_t) MEM_START), 0x12);
+            print_stringc("[MEMORY] [End>   ", 0x14);
+            println_stringc(itoa(l, (uintptr_t) MEM_END), 0x12);
+            print_stringc("[MEMORY] [Space> ", 0x14);
+            println_stringc(itoa(l, MEM_SPACE), 0x12);
+        } else if (strcmp(line, "hello") == 0)
             println_stringc("Hello!", 0x15);
-        else if (strcmp(line, "pit")) {
+        else if (strcmp(line, "pit") == 0) {
             print_stringc("PIT => ", 0x1E);
-            println_stringc(itoa(line, PITCounter), 0x12);
+            char l[80];
+            println_stringc(itoa(l, PITCounter), 0x12);
         } else {
             print_stringc(line, 0x15);
             println_stringc(" <: not found", 0x1C);
