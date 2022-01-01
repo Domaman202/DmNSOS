@@ -24,6 +24,10 @@ inline void kmain() {
         if (strcmp(line, "clear") == 0) {
             vga_clear_buffer();
             continue;
+        } else if (strcmp(line, "beep") == 0) {
+            play_sound(1000);
+            sleep(4);
+            nosound();
         } else if (strcmp(line, "memory") == 0) {
             char l[80];
             print_stringc("[MEMORY] [Start> ", 0x14);
