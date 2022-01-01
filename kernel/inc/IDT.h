@@ -41,7 +41,7 @@ extern void int_29();
 extern void int_30();
 extern void int_31();
 extern void int_32();
-extern void int_33(int a);			// Keyboard interrupt
+extern void int_33();			// Keyboard interrupt
 extern void int_34();
 extern void int_35();
 extern void int_36();

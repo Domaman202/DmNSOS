@@ -1,5 +1,7 @@
-#include "include/IDT.h"
-#include "include/keyboardkeys.h"
+#include "inc/keyboardkeys.h"
+#include "inc/string.h"
+#include "inc/alloc.h"
+#include "inc/IDT.h"
 
 char __currentChar = -1;
 
@@ -63,7 +65,7 @@ void idt_init() {
     }
 
     idt.size = sizeof(idttable) - 1;		// Size of the IDT
-    idt.offset = (unsigned int)&idttable;		// Pointer to the IDT
+    idt.offset = (uintptr_t)&idttable;		// Pointer to the IDT
 
     asm("lidt (%0)" : : "p"(&idt));			// Load the IDT struct
 }
@@ -71,6 +73,7 @@ void idt_init() {
 char getchar() {
     while(1) {
         uint8_t charKey = read_port(0x60);
+        write_port(0x20, 0x20);
         char key = getchar_keyboard(charKey).key;
         if(key!=' ') {
             write_port(0x60, 0);
@@ -80,20 +83,25 @@ char getchar() {
 }
 
 char* readline() {
-    char* output = "";
+    uint8_t i = 0;
+    char* buf = calloc(256, sizeof(char));
     while (1) {
         char char_ = getchar();
-        if(char_=='\n') {
+        if (char_ == '\n')
             break;
+
+        if (char_ == '\b' && i > 0) {
+            i--;
+            remove_char();
+            buf[strlen(buf) - 1] = '\0';
+        } else {
+            i++;
+            print_charc(char_, 0x70);
+            buf = appendCharToCharArray(buf, char_);
         }
-
-        print_char(char_);
-        if(char_!='\b')
-            output = appendCharToCharArray(output, char_);
     }
-
     println();
-    return output;
+    return buf;
 }
 
 void idt_entry(unsigned int entry, void* offset, unsigned short selector, unsigned char flag) {
@@ -175,10 +183,9 @@ void isr_15(){
 }
 void isr_16(){
     write_port(0x20,0x20);
-
-    clear_vga_buffer(&vga_buffer);
+    vga_clear_buffer();
     println_string("Coprocessor Error was called");
-    block();
+//    block();
 }
 
 void isr_17(){
@@ -252,12 +259,10 @@ void isr_32(){
 
 void isr_33() {
 //    uint8_t scancode = read_port(0x60);
-//
-//    struct KeyboardKey key = getchar_keyboard(scancode);
-//    if(scancode!=0) __currentChar = key.key;
-//    else __currentChar = -1;
-//
-//    write_port(0x60, 0);
+//    write_port(0x20, 0x20);
+//    char *str = "   ";
+//    itoa(str, scancode);
+//    println_string(str);
 }
 
 void isr_34(){

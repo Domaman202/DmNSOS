@@ -1,4 +1,5 @@
-#include "include/alloc.h"
+#include "inc/string.h"
+#include "inc/alloc.h"
 
 void mem_init(void) {
     mem_block* block = (mem_block*) MEM_START;

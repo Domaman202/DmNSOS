@@ -1,5 +1,5 @@
-#ifndef __AHCI_STRUCTS_H
-#define __AHCI_STRUCTS_H
+#ifndef __AHCI_STRUCTS_H_
+#define __AHCI_STRUCTS_H_
 
 #include "stdint.h"
 
@@ -230,4 +230,4 @@ typedef struct tagFIS_PIO_SETUP {
 	uint8_t	rsv4[2];	// Reserved
 } FIS_PIO_SETUP;
 
-#endif
+#endif // __AHCI_STRUCTS_H_

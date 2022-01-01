@@ -1,6 +1,6 @@
-#include "include/string.h"
-#include "include/ahci.h"
-#include "include/ata.h"
+#include "inc/string.h"
+#include "inc/ahci.h"
+#include "inc/ata.h"
 
 int ata_command(HBA_PORT *port, uint8_t *regs, uint8_t *buf, uint32_t buf_len, uint8_t direction) {
     port->is = (uint32_t)-1;

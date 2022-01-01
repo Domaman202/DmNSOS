@@ -1,4 +1,4 @@
-#include "include/io.h"
+#include "inc/io.h"
 
 uint8_t read_port(uint16_t port) {
     unsigned char data;

@@ -1,72 +1,102 @@
-#include "include/screen.h"
+#include "inc/screen.h"
+#include "inc/stddef.h"
+#include "inc/io.h"
 
 uint16_t* vga_buffer = (uint16_t*) VGA_ADDRESS;
 uint8_t vga_w = 80;
 uint8_t vga_h = 25;
-uint32_t vga_index, next_line_index = 1;
+uint8_t vga_x, vga_y;
 
-uint16_t vga_entry(unsigned char ch) {
+uint16_t __attribute__((gnu_inline)) vga_cc(register unsigned char ch, register uint8_t c) {
     uint16_t ax;
-    uint8_t ah, al;
 
-    ah = 0x0;
-    ah <<= 4;
-    ah |= 0xf;
-    ax = ah;
+    ax = c;
     ax <<= 8;
-    al = ch;
-    ax |= al;
+    ax |= ch;
 
     return ax;
 }
 
-void vga_set_cursor(int x, int y){
-    uint16_t pos = y * vga_w + x + 1;
-//    outb(0x3D4, 0x0F);
-//    outb(0x3D5, (uint8_t) (pos & 0xFF));
-//    outb(0x3D4, 0x0E);
-//    outb(0x3D5, (uint8_t) ((pos >> 8) & 0xFF));
-}
-
-void clear_vga_buffer(uint16_t **buffer) {
-    vga_set_cursor(0, 0);
+void vga_clear_buffer(void) {
     for (uint32_t i = 0; i < VGA_SIZE; i++)
-        (*buffer)[i] = vga_entry(0);
-    next_line_index = 1;
-    vga_index = 0;
+        vga_buffer[i] = vga_cc(0, VGA_DEFAULT_COLOR);
+    vga_x = 0;
+    vga_y = 0;
 }
 
-void init_vga(void) {
-    clear_vga_buffer(&vga_buffer);
+void vga_init(void) {
+    vga_clear_buffer();
+    vga_set_cursor(0);
 }
 
-void println() {
-    if (next_line_index >= vga_h) {
-        for (uint32_t i = 2; i < vga_index; i++)
-            vga_buffer[i - vga_w] = vga_buffer[i];
-        vga_index = next_line_index * vga_w;
-    } else {
-        vga_index = vga_w * next_line_index;
-        next_line_index++;
-    }
-
-    vga_set_cursor(0, next_line_index);
-}
-
-void print_char(char ch) {
-    if(ch=='\n') {
+void vga_checkln(void) {
+    if (vga_x > vga_w)
         println();
-        return;
-    }else if(ch=='\b') {
-        vga_index--;
-        vga_buffer[vga_index] = vga_entry(' ');
-        return;
+    if (vga_y == vga_h) {
+        vga_x = 0;
+        vga_y = vga_h - 1;
+        for (uint8_t i = 1; i < vga_h; i++)
+            for (uint8_t j = 0; j < vga_w; j++)
+                vga_buffer[((i - 1) * vga_w) + j] = vga_buffer[(i * vga_w) + j];
+        for (uint8_t i = 0; i < vga_w; i++)
+            vga_buffer[(vga_w * (vga_h - 1)) + i] = vga_cc(0, VGA_DEFAULT_COLOR);
     }
+}
 
-    vga_buffer[vga_index] = vga_entry(ch);
-    vga_index++;
+void println(void) {
+    vga_x = 0;
+    vga_y++;
+    vga_checkln();
+}
 
-    vga_set_cursor(vga_index, next_line_index);
+// CURSOR
+
+void vga_enable_cursor(uint8_t start, uint8_t end) {
+    write_port(0x3D4, 0x0A);
+    write_port(0x3D5, (read_port(0x3D5) & 0xC0) | start);
+    write_port(0x3D4, 0x0B);
+    write_port(0x3D5, (read_port(0x3D5) & 0xE0) | end);
+}
+
+void vga_disable_cursor() {
+    write_port(0x3D4, 0x0A);
+    write_port(0x3D5, 0x20);
+}
+
+void vga_set_cursor(uint16_t pos) {
+    write_port(0x3D4, 0x0F);
+    write_port(0x3D5, (uint8_t) (pos & 0xFF));
+    write_port(0x3D4, 0x0E);
+    write_port(0x3D5, (uint8_t) ((pos >> 8) & 0xFF));
+}
+
+// TODO: MOVE TO STDIO.C
+
+void remove_char(void) {
+    vga_x--;
+    if (vga_x < 0) {
+        vga_x = 0;
+        vga_y--;
+    }
+    uint16_t pos = vga_x + (vga_y * vga_w);
+    vga_buffer[pos] = vga_cc(0, VGA_DEFAULT_COLOR);
+    vga_set_cursor(pos);
+}
+
+void print_char(char c) {
+    print_charc(c, VGA_DEFAULT_COLOR);
+}
+
+void print_charc(char ch, uint8_t c) {
+    if (ch == '\n') {
+        println();
+        return '\n';
+    }
+    vga_checkln();
+    uint16_t pos = vga_x + (vga_y * vga_w);
+    vga_buffer[pos] = vga_cc(ch, c);
+    vga_set_cursor(pos + 1);
+    vga_x++;
 }
 
 void print_string(char *str) {
@@ -77,11 +107,20 @@ void print_string(char *str) {
     }
 }
 
-void println_string(char *str) {
+void print_stringc(char *str, uint8_t c) {
     uint32_t index = 0;
     while (str[index]) {
-        print_char(str[index]);
+        print_charc(str[index], c);
         index++;
     }
+}
+
+void println_string(char *str) {
+    print_string(str);
+    println();
+}
+
+void println_stringc(char *str, uint8_t c) {
+    print_stringc(str, c);
     println();
 }

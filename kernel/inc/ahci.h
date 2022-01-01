@@ -79,4 +79,4 @@ int find_cmdslot(HBA_PORT *port);
 
 int reset_port(HBA_PORT *port);
 
-#endif
+#endif // __AHCI_H_
