@@ -8,15 +8,17 @@ inline void kmain() {
 
     asm("sti");
 
-    println_string("/=>DmN<=\\");
-    println_string("/=> - <=\\");
-    println_string("/=>SOS<=\\");
+    println_string(" /=========\\");
+    println_string("/=>  DmN  <=\\");
+    println_string("|=>   -   <=|");
+    println_string("\\=>  SOS  <=/");
+    println_string(" \\=========/");
 
     char line[80];
 
     print_stringc("[MEMORY] [Start> ", 0x14);
     println_stringc(itoa(line, (uintptr_t) MEM_START), 0x12);
-    print_stringc("[MEMORY] [End> ", 0x14);
+    print_stringc("[MEMORY] [End>   ", 0x14);
     println_stringc(itoa(line, (uintptr_t) MEM_END), 0x12);
     print_stringc("[MEMORY] [Space> ", 0x14);
     println_stringc(itoa(line, MEM_SPACE), 0x12);
