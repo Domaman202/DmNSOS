@@ -1,6 +1,7 @@
 #include "inc/kernel.h"
 
-void kmain() {
+__attribute__((__noreturn__, gnu_inline))
+inline void kmain() {
     vga_init();
     idt_init();
     mem_init();
@@ -22,11 +23,12 @@ void kmain() {
 
     while (1) {
         print_string("> ");
+
         char *line = readline();
 
-        if (strcmp(line, "exit") == 0)
-            return;
-        else if (strcmp(line, "hello") == 0)
+        if (!strlen(line))
+            continue;
+        if (strcmp(line, "hello") == 0)
             println_stringc("Hello!", 0x15);
         else if (strcmp(line, "pit") == 0) {
             print_stringc("PIT => ", 0x1E);
