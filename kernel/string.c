@@ -46,12 +46,13 @@ char* strncpy(char *dest, const char *src, size_t n) {
     return memcpy(dest, src, n);
 }
 
-size_t strlen(const char* str){
-    size_t i = 0;
-    for (;*str != '\0';i++)
-        str++;
-    return i;
+size_t strlen(const char *str){
+    register const char *s;
+
+    for (s = str; *s; ++s);
+    return(s - str);
 }
+
 
 int strcmp(const char *p1, const char *p2) {
     const unsigned char *s1 = (const unsigned char *) p1;

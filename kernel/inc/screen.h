@@ -3,7 +3,7 @@
 
 #include "stdlib.h"
 
-#define VGA_DEFAULT_COLOR 0x09
+#define VGA_DEFAULT_COLOR 0x1E
 #define VGA_SIZE vga_w * vga_h
 
 extern uint16_t* vga_buffer;

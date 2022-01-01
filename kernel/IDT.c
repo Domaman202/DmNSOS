@@ -1,9 +1,45 @@
 #include "inc/keyboardkeys.h"
 #include "inc/string.h"
+#include "inc/unistd.h"
 #include "inc/alloc.h"
 #include "inc/IDT.h"
 
-char __currentChar = -1;
+uint32_t PITCounter = 0;
+
+char getchar() {
+    while(1) {
+        uint8_t charKey = read_port(0x60);
+        write_port(0x20, 0x20);
+        char key = getchar_keyboard(charKey).key;
+        if(key!=' ') {
+            write_port(0x60, 0);
+            return key;
+        }
+    }
+}
+
+char* readline() {
+    uint8_t i = 0;
+    char* buf = calloc(256, sizeof(char));
+    while (1) {
+        sleep(4);
+        char char_ = getchar();
+        if (char_ == '\n')
+            break;
+
+        if (char_ == '\b' && i > 0) {
+            i--;
+            remove_char();
+            buf[strlen(buf) - 1] = '\0';
+        } else {
+            i++;
+            print_charc(char_, 0x15);
+            buf = appendCharToCharArray(buf, char_);
+        }
+    }
+    println();
+    return buf;
+}
 
 void idt_init() {
     unsigned int i;
@@ -68,40 +104,6 @@ void idt_init() {
     idt.offset = (uintptr_t)&idttable;		// Pointer to the IDT
 
     asm("lidt (%0)" : : "p"(&idt));			// Load the IDT struct
-}
-
-char getchar() {
-    while(1) {
-        uint8_t charKey = read_port(0x60);
-        write_port(0x20, 0x20);
-        char key = getchar_keyboard(charKey).key;
-        if(key!=' ') {
-            write_port(0x60, 0);
-            return key;
-        }
-    }
-}
-
-char* readline() {
-    uint8_t i = 0;
-    char* buf = calloc(256, sizeof(char));
-    while (1) {
-        char char_ = getchar();
-        if (char_ == '\n')
-            break;
-
-        if (char_ == '\b' && i > 0) {
-            i--;
-            remove_char();
-            buf[strlen(buf) - 1] = '\0';
-        } else {
-            i++;
-            print_charc(char_, 0x70);
-            buf = appendCharToCharArray(buf, char_);
-        }
-    }
-    println();
-    return buf;
 }
 
 void idt_entry(unsigned int entry, void* offset, unsigned short selector, unsigned char flag) {
@@ -253,13 +255,14 @@ void isr_31(){
 
 void isr_32(){
     write_port(0x20,0x20);
+    PITCounter++;
 //	pitCall(); TODO:
 //	println_string("isr_32 (IRQ 0: Programmable Interrupt Timer) was called");
 }
 
 void isr_33() {
 //    uint8_t scancode = read_port(0x60);
-//    write_port(0x20, 0x20);
+    write_port(0x20, 0x20);
 //    char *str = "   ";
 //    itoa(str, scancode);
 //    println_string(str);

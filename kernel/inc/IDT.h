@@ -4,6 +4,8 @@
 #include "screen.h"
 #include "io.h"
 
+extern uint32_t PITCounter;
+
 char getchar();
 char* readline();
 
