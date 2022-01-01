@@ -25,7 +25,7 @@ inline void kmain() {
             vga_clear_buffer();
             continue;
         } else if (strcmp(line, "beep") == 0) {
-            play_sound(1000);
+            play_sound(500);
             sleep(4);
             nosound();
         } else if (strcmp(line, "memory") == 0) {
