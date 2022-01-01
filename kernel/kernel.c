@@ -25,12 +25,15 @@ inline void kmain() {
         print_string("> ");
 
         char *line = readline();
-
         if (!strlen(line))
             continue;
-        if (strcmp(line, "hello") == 0)
+
+        if (strcmp(line, "clear") == 0) {
+            vga_clear_buffer();
+            continue;
+        } else if (strcmp(line, "hello"))
             println_stringc("Hello!", 0x15);
-        else if (strcmp(line, "pit") == 0) {
+        else if (strcmp(line, "pit")) {
             print_stringc("PIT => ", 0x1E);
             println_stringc(itoa(line, PITCounter), 0x12);
         } else {
