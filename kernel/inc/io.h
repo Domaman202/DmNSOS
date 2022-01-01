@@ -14,7 +14,4 @@ void write_port(uint16_t port, uint8_t data);
 #define inportw(port, out_value) asm("inw %w1, %w0":"=a"(value):"d"(port));
 #define inportl(port, out_value) asm("inl %w1, %0":"=a"(value):"d"(port));
 
-void play_sound(uint32_t nFrequency);
-void nosound();
-
 #endif //IO_H
