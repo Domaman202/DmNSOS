@@ -24,15 +24,22 @@ inline void kmain() {
         if (strcmp(line, "clear") == 0) {
             vga_clear_buffer();
             continue;
+        } else if (strcmp(line, "test") == 0) {
+            uint8_t bc[] = {
+                    0x8b, 0x44, 0x24, 0x04,
+                    0x03, 0x44, 0x24, 0x08,
+                    0xc3
+            };
+            void *ptr = calloc(sizeof(bc), sizeof(uint8_t));
+            memcpy(ptr, bc, sizeof(bc));
+            int (*foo)(int, int) = ptr;
+            char l[80];
+            println_string(itoa(l,(*foo)(2, 3)));
+            free(ptr);
         } else if (strcmp(line, "exit") == 0) {
-            while (1) {
-                long x = rand() - rand();
-                long y = rand() - rand();
-                long i = x * y;
-                while (i >= vga_w * vga_h)
-                    i -= rand();
-                vga_buffer[i] = rand();
-            }
+            while (1)
+                for (uint16_t i = 0; i < vga_w * vga_h; i++)
+                    vga_buffer[i] = rand();
         } else if (strcmp(line, "memory") == 0) {
             char l[80];
             print_stringc("[MEMORY] [Start> ", 0x14);
