@@ -9,56 +9,64 @@ inline void kmain() {
     asm("sti");
 
     println_string(" /=========\\");
-    println_string("/=>  DmN  <=\\");
-    println_string("|=>   -   <=|");
-    println_string("\\=>  SOS  <=/");
+    println_string("/=\\  DmN  /=\\");
+    println_string("|=|   -   |=|");
+    println_string("\\=/  SOS  \\=/");
     println_string(" \\=========/");
 
     while (1) {
         print_string("> ");
+        char* line = readline();
 
-        char *line = readline();
-        if (!strlen(line))
-            continue;
-
-        if (strcmp(line, "clear") == 0) {
-            vga_clear_buffer();
-            continue;
-        } else if (strcmp(line, "test") == 0) {
-            uint8_t bc[] = {
-                    0x8b, 0x44, 0x24, 0x04,
-                    0x03, 0x44, 0x24, 0x08,
-                    0xc3
-            };
-            void *ptr = calloc(sizeof(bc), sizeof(uint8_t));
-            memcpy(ptr, bc, sizeof(bc));
-            int (*foo)(int, int) = ptr;
-            char l[80];
-            println_string(itoa(l,(*foo)(2, 3)));
-            free(ptr);
-        } else if (strcmp(line, "exit") == 0) {
-            while (1)
-                for (uint16_t i = 0; i < vga_w * vga_h; i++)
-                    vga_buffer[i] = rand();
-        } else if (strcmp(line, "memory") == 0) {
-            char l[80];
-            print_stringc("[MEMORY] [Start> ", 0x14);
-            println_stringc(itoa(l, (uintptr_t) MEM_START), 0x12);
-            print_stringc("[MEMORY] [End>   ", 0x14);
-            println_stringc(itoa(l, (uintptr_t) MEM_END), 0x12);
-            print_stringc("[MEMORY] [Space> ", 0x14);
-            println_stringc(itoa(l, MEM_SPACE), 0x12);
-        } else if (strcmp(line, "hello") == 0)
+        if (strcmp(line, "hello") == 0) {
             println_stringc("Hello!", 0x15);
-        else if (strcmp(line, "pit") == 0) {
-            print_stringc("PIT => ", 0x1E);
-            char l[80];
-            println_stringc(itoa(l, PITCounter), 0x12);
+        } else if (strcmp(line, "info") == 0) {
+            println_stringc("Authors:", 0x17);
+            println_stringc("Pavel Kuchaev", 0x18);
+            println_stringc("Dmitry Pashkov", 0x18);
+            println_stringc("Lev Koporushkin", 0x18);
+        } else if (strcmp(line, "memory") == 0) {
+            program_memory();
         } else {
-            print_stringc(line, 0x15);
-            println_stringc(" <: not found", 0x1C);
+            println_stringc("[ERROR] !NOT FOUNDED PROGRAM! [ERROR]", 0x14);
         }
 
         free(line);
     }
+}
+
+void program_memory(void) {
+    mode:
+    println_string("Select memory mode:\n0 - print space;\n1 - print blocks.");
+    char c = getchar();
+    if (c == '0') {
+        char l[80];
+        print_stringc("[MEMORY] [Start> ", 0x14);
+        println_stringc(itoa(l, (uintptr_t) MEM_START), 0x12);
+        print_stringc("[MEMORY] [End>   ", 0x14);
+        println_stringc(itoa(l, (uintptr_t) MEM_END), 0x12);
+        print_stringc("[MEMORY] [Space> ", 0x14);
+        println_stringc(itoa(l, MEM_SPACE), 0x12);
+    } else if (c == '1') {
+        char l[80];
+        uint32_t i = 0;
+        mem_block *last_block = (mem_block *) MEM_START;
+        while (last_block != MEM_END) {
+            print_stringc("Block #", 0x1D);
+            print_stringc(itoa(l, i), 0x14);
+            println_stringc(" info:", 0x1D);
+            print_stringc("[size]>      ", 0x1B);
+            println_stringc(itoa(l, mb_size(last_block)), 0x12);
+            print_stringc("[allocated]> ", 0x1B);
+            println_stringc(itoa(l, mb_size(last_block) - sizeof(mem_block)), 0x12);
+            print_stringc("[flags]>     ", 0x1B);
+            println_stringc(itoa(l, last_block->flags), 0x12);
+            print_stringc("[start]>     ", 0x1B);
+            println_stringc(itoa(l, last_block), 0x12);
+            print_stringc("[end]>       ", 0x1B);
+            println_stringc(itoa(l, last_block->next), 0x12);
+            last_block = last_block->next;
+            i++;
+        }
+    } else goto mode;
 }

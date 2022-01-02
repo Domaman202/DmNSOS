@@ -19,6 +19,15 @@ struct KeyboardKey getchar_keyboard(int code) {
     key.key = ' ';
 
     switch (code) {
+        case 2: key.key = '1'; break;
+        case 3: key.key = '2'; break;
+        case 4: key.key = '3'; break;
+        case 5: key.key = '4'; break;
+        case 6: key.key = '5'; break;
+        case 7: key.key = '6'; break;
+        case 8: key.key = '7'; break;
+        case 10: key.key = '9'; break;
+        case 11: key.key = '0'; break;
         case 14: key.key = '\b'; break;
         case 16: key.key = 'q'; break;
         case 17: key.key = 'w'; break;
