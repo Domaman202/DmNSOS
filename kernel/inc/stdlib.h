@@ -8,8 +8,12 @@
 
 static char *itoa_simple_helper(char *dest, int i);
 char *itoa(char *dest, int i);
+
 int atoi(char*);
-int32_t abs(int32_t);
-int64_t labs(int64_t);
+
+uint32_t abs(int32_t);
+uint64_t labs(int64_t);
+
+int rand(void);
 
 #endif //STDLIB_H

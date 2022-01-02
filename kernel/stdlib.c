@@ -29,10 +29,16 @@ int atoi(char* s) {
     return n;
 }
 
-int32_t abs(int32_t n) {
+uint32_t abs(int32_t n) {
     return n < 0 ? n * -1 : n;
 }
 
-int64_t labs(int64_t n) {
+uint64_t labs(int64_t n) {
     return n < 0 ? n * -1 : n;
+}
+
+int rand() {
+    static unsigned long int next = 1;
+    next = next * 1103515245 + 12345;
+    return (next / 65536) % 32768;
 }

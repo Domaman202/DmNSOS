@@ -24,6 +24,15 @@ inline void kmain() {
         if (strcmp(line, "clear") == 0) {
             vga_clear_buffer();
             continue;
+        } else if (strcmp(line, "exit") == 0) {
+            while (1) {
+                long x = rand() - rand();
+                long y = rand() - rand();
+                long i = x * y;
+                while (i >= vga_w * vga_h)
+                    i -= rand();
+                vga_buffer[i] = rand();
+            }
         } else if (strcmp(line, "memory") == 0) {
             char l[80];
             print_stringc("[MEMORY] [Start> ", 0x14);
