@@ -16,7 +16,7 @@ inline void kmain() {
 
     while (1) {
         print_string("> ");
-        char* line = readline();
+        char *line = readline();
 
         if (strcmp(line, "hello") == 0) {
             println_stringc("Hello!", 0x15);
@@ -24,9 +24,8 @@ inline void kmain() {
             program_info();
         } else if (strcmp(line, "memory") == 0) {
             program_memory();
-        } else {
+        } else if (strlen(line))
             println_stringc("[ERROR] !NOT FOUNDED PROGRAM! [ERROR]", 0x14);
-        }
 
         free(line);
     }
