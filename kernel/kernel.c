@@ -21,10 +21,7 @@ inline void kmain() {
         if (strcmp(line, "hello") == 0) {
             println_stringc("Hello!", 0x15);
         } else if (strcmp(line, "info") == 0) {
-            println_stringc("Authors:", 0x17);
-            println_stringc("Pavel Kuchaev", 0x18);
-            println_stringc("Dmitry Pashkov", 0x18);
-            println_stringc("Lev Koporushkin", 0x18);
+            program_info();
         } else if (strcmp(line, "memory") == 0) {
             program_memory();
         } else {
@@ -69,4 +66,11 @@ void program_memory(void) {
             i++;
         }
     } else goto mode;
+}
+
+void program_info(void) {
+    println_stringc("Authors:", 0x17);
+    println_stringc("Pavel Kuchaev", 0x18);
+    println_stringc("Dmitry Pashkov", 0x18);
+    println_stringc("Lev Koporushkin", 0x18);
 }

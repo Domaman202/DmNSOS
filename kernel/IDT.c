@@ -13,6 +13,7 @@ char getchar() {
         char key = getchar_keyboard(charKey).key;
         if(key!=' ') {
             write_port(0x60, 0);
+            sleep(4);
             return key;
         }
     }
@@ -20,9 +21,8 @@ char getchar() {
 
 char* readline() {
     uint8_t i = 0;
-    char* buf = calloc(256, sizeof(char));
+    char* buf = calloc(256, 1);
     while (1) {
-        sleep(4);
         char char_ = getchar();
         if (char_ == '\n')
             break;

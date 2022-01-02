@@ -9,6 +9,7 @@
 #include "IDT.h"
 #include "io.h"
 
+void program_info(void);
 void program_memory(void);
 
 #endif //KERNEL_H
