@@ -67,18 +67,6 @@ int strcmp(const char *p1, const char *p2) {
     return c1 - c2;
 }
 
-char* appendCharToCharArray(char* array, char c) {
-    size_t len = strlen(array);
-    char arr[len];
-    strcpy(arr, array);
-    char *ret = realloc(array, (len + 2) * sizeof(char));
-    if (ret != array)
-        strcpy(ret, arr);
-    ret[len] = c;
-    ret[len + 1] = '\0';
-    return ret;
-}
-
 void* memchr(const void* src_void, int c, size_t length) {
     const unsigned char *src = (const unsigned char*) src_void;
 

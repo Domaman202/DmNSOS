@@ -26,6 +26,7 @@ struct KeyboardKey getchar_keyboard(int code) {
         case 6: key.key = '5'; break;
         case 7: key.key = '6'; break;
         case 8: key.key = '7'; break;
+        case 9: key.key = '8'; break;
         case 10: key.key = '9'; break;
         case 11: key.key = '0'; break;
         case 14: key.key = '\b'; break;

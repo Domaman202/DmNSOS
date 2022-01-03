@@ -21,7 +21,7 @@ char getchar() {
 
 char* readline() {
     uint8_t i = 0;
-    char* buf = calloc(256, 1);
+    char* buf = calloc(80, 1);
     while (1) {
         char char_ = getchar();
         if (char_ == '\n')
@@ -32,9 +32,9 @@ char* readline() {
             remove_char();
             buf[strlen(buf) - 1] = '\0';
         } else {
-            i++;
+            buf[i++] = char_;
+            buf[i] = '\0';
             print_charc(char_, 0x15);
-            buf = appendCharToCharArray(buf, char_);
         }
     }
     println();

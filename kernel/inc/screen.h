@@ -7,7 +7,7 @@
 #define VGA_SIZE vga_w * vga_h
 
 extern uint16_t* vga_buffer;
-extern uint8_t vga_w, vga_h, vga_x, vga_y;
+extern uint8_t vga_w, vga_h, vga_x, vga_y, vga_auto_scroll;
 
 // vga utils
 uint16_t vga_cc(unsigned char, uint8_t);

@@ -9,14 +9,12 @@
 
 typedef struct mem_block {
     uint8_t flags;
-    struct mem_block* next;
+    uint32_t size;
 } mem_block;
 
 void mem_init(void);
-int32_t mb_size(mem_block*);
-mem_block* split_heap(size_t);
 
-void* realloc(void*, size_t);
+//void* realloc(void*, size_t);
 void* calloc(size_t num, size_t size);
 void* malloc(size_t);
 void free(void*);

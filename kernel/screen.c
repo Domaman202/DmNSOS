@@ -1,11 +1,12 @@
 #include "inc/screen.h"
 #include "inc/stddef.h"
+#include "inc/IDT.h"
 #include "inc/io.h"
 
 uint16_t* vga_buffer = (uint16_t*) VGA_ADDRESS;
 uint8_t vga_w = 80;
 uint8_t vga_h = 25;
-uint8_t vga_x, vga_y;
+uint8_t vga_x, vga_y, vga_auto_scroll = 1;
 
 uint16_t __attribute__((gnu_inline)) vga_cc(register unsigned char ch, register uint8_t c) {
     uint16_t ax;
@@ -33,6 +34,8 @@ void vga_checkln(void) {
     if (vga_x > vga_w)
         println();
     if (vga_y == vga_h) {
+        if (!vga_auto_scroll)
+            getchar();
         vga_x = 0;
         vga_y = vga_h - 1;
         for (uint8_t i = 1; i < vga_h; i++)
