@@ -1,8 +1,4 @@
 .idea
 
-kernel/*.o
-bootloader/bootloader0
-bootloader/bootloader1
-iso
-
-dist
+os.bin
+disk.img
