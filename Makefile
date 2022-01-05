@@ -6,8 +6,6 @@ FLAGS_C = -m32 -w
 
 compile: bootloader_compile kernel_compile
 	cat ./build/bootloader.bin ./build/kernel.bin ./fs/fs > os.bin
-	dd if=os.bin of=disk.img conv=notrunc
-	rm -rf ./build
 
 kernel_compile:
 	nasm -felf -o ./build/kasm.o ./src/kernel.asm
